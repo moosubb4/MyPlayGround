@@ -1,5 +1,5 @@
 <div>
-  <div class="inline">
+  <div class="calendar-container">
 
     <select *ngIf="showDropdown"
             [(ngModel)]="selectJapEra">
@@ -20,8 +20,6 @@
          class="calendar">
 
       <div class="calendar-header">
-        Date Picker
-        <br>
         <select [(ngModel)]="selectYear"
                 (change)="selectedDate()">
           <option *ngFor="let item of showYearLength">{{item.isYear}}</option>
@@ -34,7 +32,6 @@
 
       <!-- Table Year-->
       <table class="calendar-table">
-
         <tr>
           <th *ngFor="let item of dateJap.dayNamesMin">{{item}}</th>
         </tr>
@@ -45,6 +42,24 @@
     </div>
 
 
+    <!-- Table Flex-->
+
+    <!-- <div class="calerder-flex-container">
+      <div class="calerder-flex-month">
+
+        <div class="calerder-flex-week">
+          <div class="calerder-flex-day"
+               *ngFor="let item of dateJap.dayNamesMin">{{item}}</div>
+        </div>
+
+        <div class="calerder-flex-week"
+             *ngFor="let w of showWeeks">
+          <div class="calerder-flex-day"
+               *ngFor="let d of w">{{d}}</div>
+        </div>
+
+      </div>
+    </div> -->
     <!-- onupdateDate($event); -->
   </div>
 </div>

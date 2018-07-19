@@ -3,8 +3,10 @@
     box-shadow: 0 0 5px rgba(0, 0, 0, .4);
     position: absolute;
     z-index: 10;
-    /* top: 100%; */
     left: 16px;
+    width: 245px;
+    height: 280px;
+    /* padding: 9px; */
 }
 
 .calendar-header {
@@ -12,12 +14,15 @@
     position: relative;
     line-height: 42px;
     font-size: 16px;
+    /* border-bottom: 1px solid black; */
+    padding: 5px 0;
 }
 
 .calendar-table {
     table-layout: fixed;
     border-spacing: 0;
     border-collapse: collapse;
+    margin: 0px 10px 10px 10px;
 }
 
 .calendar-cell {
@@ -30,6 +35,58 @@ table {
     border-collapse: collapse;
 }
 
-table, th, td {
-    border: 1px solid black;
+tr:first-child {
+    border-bottom: 1px solid black;
 }
+
+th,
+td {
+    /* border: 1px hidden black; */
+    padding: 7px;
+    text-align: center;
+}
+
+th:first-child {
+    color: red;
+}
+
+td:hover {
+    background-color: #b7b5b596;
+}
+
+.calendar-container {
+    display: inline-block;
+}
+
+.calerder-flex-container {
+    display: flex;
+    flex-direction: row;
+    background: #FFF;
+    box-shadow: 0 0 5px rgba(0, 0, 0, .4);
+    position: absolute;
+    z-index: 10;
+    left: 286px;
+    top: 410px;
+    width: 250px;
+    height: 300px;
+}
+
+/*calerder-flex*/
+
+/* 
+.calerder-flex-header {}
+
+.calerder-flex-month {}
+
+.calerder-flex-week {
+    flex-direction: row;
+}
+
+.calerder-flex-day {
+    background-color: #f1f1f1;
+    width: 100px;
+    margin: 10px;
+    text-align: center;
+    line-height: 75px;
+    font-size: 30px;
+} */
