@@ -1,0 +1,123 @@
+/* Loader */
+  
+.cs-loader {
+    position: absolute;
+    top: 0px;
+    left: -340px;
+    height: 1150px;
+    width: 160%;
+    background-color: rgba(255, 255, 255, 0.6);
+    z-index: 50;
+    display: block;
+  }
+  
+  .cs-loader-inner {
+    transform: translateY(-50%);
+    top: 50%;
+    position: absolute;
+    width: calc(100% - 200px);
+    color: #3498db;
+    padding: 0 100px;
+    text-align: center;
+  }
+  
+  .cs-loader-inner label {
+    font-size: 20px;
+    opacity: 0;
+    display: inline-block;
+  }
+  
+  @keyframes lol {
+    0% {
+      opacity: 0;
+      transform: translateX(-300px);
+    }
+    33% {
+      opacity: 1;
+      transform: translateX(0px);
+    }
+    66% {
+      opacity: 1;
+      transform: translateX(0px);
+    }
+    100% {
+      opacity: 0;
+      transform: translateX(300px);
+    }
+  }
+  
+  @-webkit-keyframes lol {
+    0% {
+      opacity: 0;
+      -webkit-transform: translateX(-300px);
+    }
+    33% {
+      opacity: 1;
+      -webkit-transform: translateX(0px);
+    }
+    66% {
+      opacity: 1;
+      -webkit-transform: translateX(0px);
+    }
+    100% {
+      opacity: 0;
+      -webkit-transform: translateX(300px);
+    }
+  }
+  
+  .cs-loader-inner label:nth-child(6) {
+    -webkit-animation: lol 3s infinite ease-in-out;
+    animation: lol 3s infinite ease-in-out;
+  }
+  
+  .cs-loader-inner label:nth-child(5) {
+    -webkit-animation: lol 3s 100ms infinite ease-in-out;
+    animation: lol 3s 100ms infinite ease-in-out;
+  }
+  
+  .cs-loader-inner label:nth-child(4) {
+    -webkit-animation: lol 3s 200ms infinite ease-in-out;
+    animation: lol 3s 200ms infinite ease-in-out;
+  }
+  
+  .cs-loader-inner label:nth-child(3) {
+    -webkit-animation: lol 3s 300ms infinite ease-in-out;
+    animation: lol 3s 300ms infinite ease-in-out;
+  }
+  
+  .cs-loader-inner label:nth-child(2) {
+    -webkit-animation: lol 3s 400ms infinite ease-in-out;
+    animation: lol 3s 400ms infinite ease-in-out;
+  }
+  
+  .cs-loader-inner label:nth-child(1) {
+    -webkit-animation: lol 3s 500ms infinite ease-in-out;
+    animation: lol 3s 500ms infinite ease-in-out;
+  }
+  
+  
+/**/
+
+.box-clear{
+  background-color: rgba(31, 150, 230,0.5);
+  border: 1px solid rgb(85, 87, 82);  
+  margin: 3px;  
+}
+
+.box-clear span{
+  border-style: solid; 
+  padding-left: 2px; 
+  padding-right: 2px;
+}
+
+input[type=number]::-webkit-inner-spin-button, 
+input[type=number]::-webkit-outer-spin-button { 
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    margin: 0; 
+}
+
+.sbc_field {
+	ime-mode: disabled;
+}

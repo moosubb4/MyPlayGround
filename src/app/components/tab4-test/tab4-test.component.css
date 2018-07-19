@@ -1,0 +1,194 @@
+.kr{
+table-layout: auto;
+background-color: #fff7aa;
+border:3px;
+border-color: black;
+display: table;
+}
+
+/* input[type=number]::-webkit-inner-spin-button, 
+input[type=number]::-webkit-outer-spin-button { 
+  -webkit-appearance: none; 
+  margin: 0; 
+} */
+
+/* .nonnum::-webkit-inner-spin-button, 
+.nonnum::-webkit-outer-spin-button { 
+  -webkit-appearance: none; 
+  margin: 0; 
+} */
+
+.kr--tr{    
+    display: flex;
+    flex-direction: row;       
+}
+
+.kr--tr>div{
+    padding: 1px; 
+    width: 100%;
+}
+
+.kr--td{
+    display: flex;
+    flex-direction: column;  
+}
+
+.kr--td>div{
+    margin: 3px; 
+    width: 100px; 
+}
+
+.kr--thead{
+    background-color: rgb(243, 167, 2);
+}
+
+.kr--tbody{
+    background-color: rgb(224, 241, 66);
+}
+
+.kr--tfoot{
+    background-color: rgb(122, 226, 25);
+    justify-content: center !important;
+}
+
+.textTips {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    width: 100%;
+    display: inline-block;      
+}
+
+
+/* 
+.Table
+{
+    display: table;
+}
+.Title
+{
+    display: table-caption;
+    text-align: center;
+    font-weight: bold;
+    font-size: larger;
+}
+.Heading
+{
+    display: table-row;
+    font-weight: bold;
+    text-align: center;
+}
+.Row
+{
+    display: table-row;
+}
+.Cell
+{
+    display: table-cell;
+    border: solid;
+    border-width: thin;
+    padding-left: 5px;
+    padding-right: 5px;
+} */
+
+/*------------------------------------------------*/
+.btn-foot{
+    width: 100%;
+    float: right;
+}
+
+.btn-foot .btn {
+	background-color: #b2b2b2;
+	box-shadow: 0 2px 0 #797979;
+    color: #fff;
+    float: right;
+    margin-left: 5px;
+    
+}
+.btn-foot .btn_pink {
+    background-color: #f899b0;
+    color: #fff;
+    box-shadow: 0 2px 0 #797979;
+}
+
+.btn-foot .btn_blue {
+    background-color: #2ea7e0;
+    color: #fff;
+    box-shadow: 0 2px 0 #797979;
+}
+
+ .btn-foot> p {
+    float: left;
+    margin-top: 20px;
+} 
+
+.close {
+    font-size: 21px;
+    float: right;
+}
+
+/*------------------------------------------------*/
+
+/* Tooltip container */
+.tooltips {
+    position: relative;
+    display: inline-block;  
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    width: 180px;
+}
+
+/* Tooltip text */
+.tooltips .tooltiptext {
+    visibility: hidden;
+    background-color: #fff7aa;/* #555;*/
+    color: rgb(10, 3, 3);
+    text-align: center;
+    padding: 4px 0;
+    padding-left: 4px;
+    padding-right: 4px;
+
+    /* Position the tooltip text */
+    position: absolute;
+    z-index: 1;
+    bottom: 15%;
+    left: -5%;
+
+    /* Fade in tooltip */
+    opacity: 0;
+    transition: opacity 1s;
+}
+
+/* Tooltip arrow */
+.tooltips .tooltiptext::after {
+    content: "";
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    margin-left: -5px;
+    border-width: 5px;
+    /* border-style: solid; */
+    /* border-color: #555 transparent transparent transparent; */
+}
+
+/* Show the tooltip text when you mouse over the tooltip container */
+.tooltips:hover .tooltiptext {
+    visibility: visible;
+    opacity: 1;
+}
+
+.tooltips .subTips {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    width: 100%;
+    display: inline-block;      
+}
+/*------------------------------------------------*/
+
+.disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+    pointer-events: none;
+}
+

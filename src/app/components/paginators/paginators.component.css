@@ -1,0 +1,210 @@
+
+/* .paginator{
+    text-align: center;
+}
+
+.paginator li {
+padding: 2px;
+display: inline-block;
+}
+
+.paginator .pagination {
+    flex-direction: row;
+    margin: 3px;
+    background: linear-gradient(to bottom, #ebebeb 0%, #cacaca 100%);
+    padding: 5px 10px;
+
+}
+
+.paginator .pagination li>a {
+    color: black;
+    background-color: rgb(247, 247, 247);
+    float: left;
+    padding: 1px 6px;
+    text-decoration: none;
+    border-style: solid;
+    border-width: 2px;
+    border-color: rgb(206, 204, 204);
+    border-radius: 4px;
+}
+
+.paginator .pg-num a{
+    margin: 0px 3px;
+}
+
+.paginator .pg-arrow-l a{
+    margin: 0px 11px 0px 4px;
+}
+
+.paginator .pg-arrow-r a{
+    margin: 0px 4px 0px 11px;
+}
+
+.paginator .pagination li>a.active {
+    background-color: rgb(43, 169, 241);
+    color: white;
+    border-style: solid;
+    border-width: 2px;
+    border-color: rgb(30, 166, 245)
+}
+
+.paginator .pagination li>a.disabled {
+    background-color:rgb(221, 221, 221);
+    color: rgb(160, 160, 160);
+    cursor: no-drop;
+ }
+
+ .paginator .pagination li>a:hover:not(.active) {background-color: #ddd;}
+
+ .paginator .pg-dp {
+    padding: 1px 6px;
+    margin: 0px 0px 0px 20px;
+    border: 2px solid rgba(0,0,0,.14);
+    border-radius: 4px;
+} */
+
+/*V2*/
+
+/* 
+.paginator{
+    text-align: center;
+}
+
+.paginator div {
+display: inline-block;
+}
+
+.pagination .paginator sx1{
+    padding: 0px 3px;
+}
+
+.pagination .paginator sx2{
+    padding: 1px 6px;
+}
+
+.pagination .paginator sx3{
+    padding: 2px 8px;
+}
+
+.paginator .pagination {    
+    margin: 3px;
+    background: linear-gradient(to bottom, #ebebeb 0%, #cacaca 100%);
+    background: rgb(255, 255, 255);
+    border-style: solid;
+    border-color: lightgray;
+    padding: 2px 5px;
+    width: 40%;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    margin: 0 auto;
+}
+
+.paginator .pagination div>a {
+    color: black;
+    background-color: rgb(247, 247, 247);
+    float: left;
+    padding: 1px 6px;
+    text-decoration: none;
+    border-style: solid;
+    border-width: 1px;
+    border-color: rgb(206, 204, 204);
+    border-radius: 4px;
+}
+
+.paginator .pg-num a{
+    margin: 0px 2px;
+}
+
+.paginator .pg-arrow-l a{
+    margin: 0px 11px 0px 4px;
+}
+
+.paginator .pg-arrow-r a{
+    margin: 0px 4px 0px 11px;
+}
+
+.paginator .pagination div>a.active {
+    background-color: rgb(43, 169, 241);
+    color: white;
+    border-style: solid;
+    border-width: 2px;
+    border-color: rgb(30, 166, 245)
+}
+
+.paginator .pagination div>a.disabled {
+    background-color:rgb(221, 221, 221);
+    color: rgb(160, 160, 160);
+    cursor: no-drop;
+ }
+
+ .paginator .pagination div>a:hover:not(.active) {background-color: #ddd;}
+
+ .paginator .pg-dp {
+    margin: 0px 0px 0px 20px;
+    border: 2px solid rgba(0,0,0,.14);
+    border-radius: 4px;
+} */
+
+
+.center{
+    text-align: center
+}
+
+.left{
+    text-align: left
+}
+
+.right{
+    text-align: right
+}
+
+.pagination {
+    display: inline-block;
+    /* border-style: solid;
+    border-width: 2px;
+    border-color: #eae9e9;
+    border-radius: 4px; */
+}
+
+
+
+.pagination a {
+    /* font-size: 22px; */
+    color: black;
+    float: left;
+    padding: 4px 10px;
+    text-decoration: none;
+    transition: background-color .1s;
+    border: 1px solid #ddd;
+    border-radius: 4px; 
+    margin: 0 4px;
+}
+
+.pagination select {
+    /* font-size: 22px; */
+    color: black;
+    float: left;
+    padding: 4px 2px;
+    text-decoration: none;
+    transition: background-color .1s;
+    border: 1px solid #ddd;
+    border-radius: 4px; 
+    /* margin: 0 15px; */
+    margin: 0 4px 0 15px;
+}
+
+.pagination a.active {
+    background-color: #2ea7e0;;
+    color: white;
+    border: 1px solid #2ea7e0;;
+    
+}
+
+.disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+    pointer-events: none;
+}
+
+.pagination a:hover:not(.active) {background-color: #ddd;}

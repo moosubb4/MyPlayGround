@@ -1,0 +1,25 @@
+<div class="row">
+  <div class="col-md-2"></div>
+  <div class="col-md-7">
+    <table class="center table table-hover">
+      <thead>
+        <th>Name</th>
+        <th>Email</th>
+        <th>Username</th>
+        <th>Address</th>
+      </thead>
+      <tbody>
+        <tr *ngFor="let users of userStat;let i = index" [ngStyle]="setStyle(i)">
+          <td>
+            <input type="checkbox" name="{{users.id}}" (change)="onCheck(i,users,$event.target.checked)"> {{users.name}}</td>
+          <td>{{users.email}}</td>
+          <td>{{users.username}}</td>
+          <td>{{users.address.street}}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="col-md-3">
+    <app-check-select *ngIf="userEmpty === false" [userStat]="userStatChange"></app-check-select>
+  </div>
+</div>

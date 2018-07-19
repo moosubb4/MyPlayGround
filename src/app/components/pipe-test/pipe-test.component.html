@@ -1,0 +1,132 @@
+<h1>Pipe</h1>
+<div>
+  <input type="text"
+         name="num"
+         [(ngModel)]="num">
+  <h1>To : {{num|numcomma}}</h1>
+</div>
+<br/>
+<div>
+  <input type="text"
+         name="num2"
+         [ngModel]="num2 | numcomma "
+         (ngModelChange)="num2 = $event;onPress($event)"
+         (change)="onPress($event)">
+  <!-- <input type="text" name="num2" [(ngModel)]="num2" appNumberjap="true"> (ngModelChange)="num2 = $event;onPress($event)" -->
+  <!-- <h1>To : {{num2}}</h1> -->
+  <a href="#"
+     disabled> Click Me!!!</a>
+  <h1>To : {{num2}}</h1>
+  <!-- <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha256-k2WSCIexGzOj3Euiig+TlR8gA0EmPjuc79OEeY5L45g="
+    crossorigin="anonymous"></script>
+  <script>
+    $().ready(function () {
+      $('input').bind('keydown', function (event) {
+        console.log("-");
+        console.log(event.type, event);
+      });
+    });
+
+  </script> -->
+</div>
+<div class="row">
+  <div class="col-md-6">
+    <input type="text"
+           [(ngModel)]="years">
+    <br/>
+    <input type="text"
+           appJapYears
+           [japYear]=true>
+  </div>
+  <div class="col-md-6">To : {{years | jpYears}}</div>
+  <br/>
+  <!-- <div class="col-md-6">To : {{years1}}</div> -->
+</div>
+
+<br/>
+<div class="row">
+  <div class="col-md-6">
+    <div>
+      <h1>MaxLenght</h1>
+      <input type="text"
+             name="numMax"
+             [(ngModel)]="numMax"
+             maxlength="10"
+             appNumberjap>
+      <!--(blur)="zeroFill($event)"-->
+      <br/>
+      <input type="text"
+             name="numMax"
+             [ngModel]="dateForm | jpYears">
+    </div>
+  </div>
+</div>
+
+<hr/>
+<br/>
+<h1>PlayList</h1>
+<div>
+  <div *ngIf="loader"
+       class="cs-loader">
+    <div class="cs-loader-inner">
+      <label> ●</label>
+      <label> ●</label>
+      <label> ●</label>
+      <label> ●</label>
+      <label> ●</label>
+      <label> ●</label>
+    </div>
+  </div>
+  <button (click)="onPlay()">Play</button>
+  <button (click)="onPause()">Pause</button>
+</div>
+
+
+<div class="row"
+     style="width: 500px">
+
+  <!-- <ul [dragula]='"bag-one"' [dragulaOptions]="options" [dragulaModel]='list' style="background-color: rgb(230, 147, 31)" class="container">
+    <li *ngFor="let item of list">{{item}}</li>
+  </ul> -->
+  <div [dragula]='"bag-one"'
+       [dragulaModel]='list'
+       style="background-color: rgb(146, 36, 219)"
+       class="col-md-6">
+    Bag One
+    <div *ngFor="let item of list"
+         class="box-clear">
+      <span class="handle">+</span> {{item}}</div>
+  </div>
+
+  <!-- <ul [dragula]='"bag-one"' [dragulaOptions]="options" [dragulaModel]='gift' style="background-color: blanchedalmond" class="container">
+    <li *ngFor="let item of gift">{{item}}</li>
+  </ul> -->
+  <div [dragula]='"bag-one"'
+       [dragulaModel]='gift'
+       style="background-color: rgb(14, 168, 168); "
+       class="col-md-6">
+    Bag Two
+    <div *ngFor="let item of gift"
+         class="box-clear">
+      <span class="handle">+</span> {{item}}</div>
+  </div>
+
+</div>
+<br/>
+
+<div class="row">
+  <div class="col-md-6">
+    Normal:
+    <input type="text"
+           [(ngModel)]="kuy1"
+           name="kuy1"
+           id="kuy1">
+  </div>
+  <div class="col-md-6">
+    Show:
+    <input type="text"
+           [ngModel]="kuy1 | jpYears"
+           name="kuy2"
+           id="kuy2">
+  </div>
+</div>

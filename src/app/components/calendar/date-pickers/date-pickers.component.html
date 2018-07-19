@@ -1,0 +1,50 @@
+<div>
+  <div class="inline">
+
+    <select *ngIf="showDropdown"
+            [(ngModel)]="selectJapEra">
+      <option></option>
+      <option *ngFor="let item of yearShort">{{item}}</option>
+    </select>
+
+    <input type="tel"
+           id="inputDate"
+           #inputTel
+           [(ngModel)]="inputDates"
+           (keydown.enter)="onFocusOut()"
+           (focus)="toggleDatepicker('open')"
+           (focusout)="getInputDate($event)"
+           [maxLength]="maxLen">
+
+    <div *ngIf="onDatepicker"
+         class="calendar">
+
+      <div class="calendar-header">
+        Date Picker
+        <br>
+        <select [(ngModel)]="selectYear"
+                (change)="selectedDate()">
+          <option *ngFor="let item of showYearLength">{{item.isYear}}</option>
+        </select>
+        <select [(ngModel)]="selectMonth"
+                (change)="selectedDate()">
+          <option *ngFor="let item of dateJap.monthNames">{{item}}</option>
+        </select>
+      </div>
+
+      <!-- Table Year-->
+      <table class="calendar-table">
+
+        <tr>
+          <th *ngFor="let item of dateJap.dayNamesMin">{{item}}</th>
+        </tr>
+        <tr *ngFor="let w of showWeeks">
+          <td *ngFor="let d of w">{{d}}</td>
+        </tr>
+      </table>
+    </div>
+
+
+    <!-- onupdateDate($event); -->
+  </div>
+</div>

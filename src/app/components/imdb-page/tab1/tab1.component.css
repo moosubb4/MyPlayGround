@@ -1,0 +1,40 @@
+.moviecard:hover{
+    width: 205px;    
+    height:350px;   
+    border: 10px solid rgba(0, 0, 0, 0.356);
+    text-align: center;
+    float: left;
+    margin: 5px ;
+    box-shadow: 4px 4px 4px #cccccc;
+    padding: 0px;
+}
+.moviecardSelected{
+    width: 205px;    
+    height:350px;  
+    border: 10px solid rgb(0, 0, 0);
+    text-align: center;
+    float: left;
+    margin: 5px ;
+    box-shadow: 4px 4px 4px #cccccc;
+    padding: 0px;
+}
+.moviecard{
+    width: 205px;    
+    height:350px;
+    border: 10px solid rgb(219, 219, 219); 
+    border: 1px solid #ddd  ;
+    float: left;
+    text-align: center;
+    margin: 5px ;
+    box-shadow: 4px 4px 4px #cccccc;
+    padding: 10px;
+}
+
+.flex-container {
+    /* display: flex; */
+    align-items: stretch;
+    background-color: DodgerBlue;
+  }
+  
+
+  

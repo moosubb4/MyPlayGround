@@ -1,0 +1,145 @@
+<div class="row">
+  <div class="col-lg-3"></div>
+  <div class="col-lg-3">
+    <span>
+      <label for="">&nbsp;1:</label>
+      <input type="text"
+             name=""
+             id="focus1"
+             [(ngModel)]="checkText">
+    </span>
+    <br>
+    <span>
+      <label for="">&nbsp;2:</label>
+      <input type="text"
+             name=""
+             id="focus2"
+             [(ngModel)]="txt1"
+             (focusout)="onCheck($event)"
+             appKeyenter>
+    </span>
+    <br>
+    <span>
+      <label for="">&nbsp;3:</label>
+      <input type="text"
+             name=""
+             id="focus3"
+             appKeyenter>
+    </span>
+    <br>
+    <span>
+      <label for="">&nbsp;4:</label>
+      <input type="text"
+             name=""
+             id="focus4"
+             appKeyenter>
+    </span>
+    <br>
+    <span>
+      <label for="">&nbsp;5:</label>
+      <input type="text"
+             name=""
+             id="focus5"
+             appKeyenter>
+    </span>
+  </div>
+  <div class="col-lg-3">
+    <span>
+      <label for="">&nbsp;6:</label>
+      <input type="text"
+             name=""
+             id="focus6"
+             appKeyenter>
+    </span>
+    <br>
+    <span>
+      <label for="">&nbsp;7:</label>
+      <input type="text"
+             name=""
+             id="focus7"
+             appKeyenter>
+    </span>
+    <br>
+    <span>
+      <label for="">&nbsp;8:</label>
+      <input type="text"
+             name=""
+             id="focus8"
+             appKeyenter>
+    </span>
+    <br>
+    <span>
+      <label for="">&nbsp;9:</label>
+      <input type="text"
+             name=""
+             id="focus9"
+             appKeyenter>
+    </span>
+    <br>
+    <span>
+      <label for="">10:</label>
+      <input type="text"
+             name=""
+             id="focusout"
+             appKeyenter>
+    </span>
+  </div>
+  <div class="col-lg-3">
+    <input type="text"
+           name=""
+           id="kuy1"
+           appKeyenter
+           [groupNm]="'kuy'">
+    <input type="text"
+           name=""
+           id="kuy2"
+           appKeyenter
+           [groupNm]="'kuy'">
+    <input type="text"
+           name=""
+           id="kuy3"
+           appKeyenter
+           [groupNm]="'kuy'">
+    <input type="text"
+           name=""
+           id="kuy4"
+           appKeyenter
+           [groupNm]="'kuy'">
+    <input type="text"
+           name=""
+           id="kuy5"
+           appKeyenter
+           [groupNm]="'kuy'">
+    <input type="text"
+           name=""
+           id="kuy6"
+           appKeyenter
+           [groupNm]="'kuy'">
+
+  </div>
+</div>
+<div class="row">
+  <div class="col-mg-3">
+    <br>
+    <h1>Here</h1>
+    <div class="lds-ripple">
+      <div></div>
+      <div></div>
+    </div>
+  </div>
+  <div class="col-mg-6">
+    <h1>
+      Here:
+      <small>{{showAlert}}</small>
+    </h1>
+  </div>
+  <div class="col-mg-3">
+  </div>
+
+</div>
+
+<!-- <div class="row">
+  <div class="col-mg-12">
+    <app-date-pickers></app-date-pickers>
+  </div>
+</div> -->

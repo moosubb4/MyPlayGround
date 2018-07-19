@@ -1,0 +1,117 @@
+<!-- <div class="paginator">
+  <ul class="pagination">
+    <li class="">
+      <a class="" href="javascript:void(0);" [ngClass]="{disabled : page <= 1}" (click)="goFirst()">
+        <i class="glyphicon glyphicon-step-backward"> |
+          < </i>
+      </a>
+    </li>
+    <li class="pg-arrow-l">
+      <a class="" href="javascript:void(0);" [ngClass]="{disabled : page <= 1}" (click)="onPrevious()">
+        <i class="glyphicon glyphicon-chevron-left">
+          <<</i>
+      </a>
+    </li>
+    <li class="pg-num" *ngFor="let pg of pageCurrent">
+      <a href="javascript:void(0);" (click)="onSelectpage(pg)" [ngClass]="{active : page === pg}">{{pg}}</a>
+    </li>
+    <li class="pg-arrow-r">
+      <a class="" href="javascript:void(0);" [ngClass]="{disabled : page >= size}" (click)="onNext()">
+        <i class=" glyphicon glyphicon-chevron-right ">>></i>
+      </a>
+    </li>
+    <li class="">
+      <a class="" href="javascript:void(0);" [ngClass]="{disabled : page >= size}" (click)="golast()">
+        <i class="glyphicon glyphicon-step-forward">>|</i>
+      </a>
+    </li>
+    <li class="">
+      <select (change)="onSelectrow($event.target.value)" class="pg-dp">
+        <option *ngFor="let rop of rowsPerPageOptions">{{rop}}</option>
+      </select>
+    </li>
+  </ul>
+</div> -->
+
+<!-- 
+<div class="paginator">
+  <div class="pagination">
+    <div>
+      <a href="javascript:void(0);" [ngClass]="{disabled : page <= 1}" (click)="goFirst()">
+        <i class="glyphicon glyphicon-step-backward">|&laquo;</i>
+      </a>
+    </div>
+    <div class="pg-arrow-l">
+      <a href="javascript:void(0);" [ngClass]="{disabled : page <= 1}" (click)="onPrevious()">
+        <i class="glyphicon glyphicon-chevron-left">&laquo;</i>
+      </a>
+    </div>
+    <div class="pg-num" *ngFor="let pg of pageCurrent">
+      <a href="javascript:void(0);" (click)="onSelectpage(pg)" [ngClass]="{active : page === pg}">{{pg}}</a>
+    </div>
+    <div class="pg-arrow-r">
+      <a href="javascript:void(0);" [ngClass]="{disabled : page >= size}" (click)="onNext()">
+        <i class="glyphicon glyphicon-chevron-right ">&raquo;</i>
+      </a>
+    </div>
+    <div>
+      <a href="javascript:void(0);" [ngClass]="{disabled : page >= size}" (click)="golast()">
+        <i class="glyphicon glyphicon-step-forward">&raquo;|</i>
+      </a>
+    </div>
+    <div>
+      <select (change)="onSelectrow()" class="pg-dp" [(ngModel)]="row">
+        <option *ngFor="let rop of rowsPerPageOptions">{{rop}}</option>
+      </select>
+    </div>
+  </div>
+</div> -->
+<!-- <hr/>
+<br/>
+<div class="center">
+  <div class="pagination" [ngClass]="{disabled : enable === false}">
+    <a href="javascript:void(0);" [ngClass]="{disabled : page <= 1}" (click)="goFirst()">
+      <i class="fas fa-angle-double-left"></i>
+    </a>
+    <a href="javascript:void(0);" [ngClass]="{disabled : page <= 1}" (click)="onPrevious()">
+      <i class="fas fa-angle-left"></i>
+    </a>
+    <a href="javascript:void(0);" *ngFor="let pg of pageCurrent" (click)="onSelectpage(pg)" [ngClass]="{active : page === pg}">{{pg}}</a>
+    <a href="javascript:void(0);" [ngClass]="{disabled : page >= size}" (click)="onNext()">
+      <i class="fas fa-angle-right"></i>
+    </a>
+    <a href="javascript:void(0);" [ngClass]="{disabled : page >= size}" (click)="golast()">
+      <i class="fas fa-angle-double-right"></i>
+    </a>
+    <select (change)="onSelectrow()" [(ngModel)]="row">
+      <option *ngFor="let rop of rowsPerPageOptions">{{rop}}</option>
+    </select>
+  </div>
+</div>
+<br/>
+<hr/> -->
+
+<hr/>
+<br/>
+<div class="center">
+  <div class="pagination" [ngClass]="{disabled : enable === false}">
+    <a href="javascript:void(0);" [ngClass]="{disabled : focusPage <= 1}" (click)="goFirst()">
+      <i class="fas fa-angle-double-left"></i>
+    </a>
+    <a href="javascript:void(0);" [ngClass]="{disabled : focusPage <= 1}" (click)="onPrevious()">
+      <i class="fas fa-angle-left"></i>
+    </a>
+    <a href="javascript:void(0);" *ngFor="let pg of pageCurrent;let i = index" (click)="onSelectpage(pg)" [ngClass]="{active : focusPage === pg}">{{pg}}</a>
+    <a href="javascript:void(0);" [ngClass]="{disabled : focusPage >= size}" (click)="onNext()">
+      <i class="fas fa-angle-right"></i>
+    </a>
+    <a href="javascript:void(0);" [ngClass]="{disabled : focusPage >= size}" (click)="golast()">
+      <i class="fas fa-angle-double-right"></i>
+    </a>
+    <select (change)="onSelectrow()" [(ngModel)]="row">
+      <option *ngFor="let rop of rowPage">{{rop}}</option>
+    </select>
+  </div>
+</div>
+<br/>
+<hr/>

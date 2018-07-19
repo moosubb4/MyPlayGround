@@ -1,0 +1,18 @@
+<div class="container">
+  <div class="row">
+    <div class="col-md-12">
+      <ul class="nav nav-tabs">
+        <li class="nav-item" *ngFor="let item of tabs">
+          <a class="nav-link" (click)="onTab(item)" style="cursor: pointer" [ngClass]="{'active':item.status == true}">{{item.name}}</a>
+        </li>
+      </ul>
+      <br>
+      <div [ngSwitch]="tabCurrent">
+        <app-tab1 *ngSwitchCase="0"></app-tab1>
+        <app-tab2 *ngSwitchCase="1"></app-tab2>
+        <app-tab3 *ngSwitchCase="2"></app-tab3>
+        <app-tab4 *ngSwitchCase="3"></app-tab4>
+      </div>
+    </div>
+  </div>
+</div>

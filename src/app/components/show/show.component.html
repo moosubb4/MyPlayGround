@@ -1,0 +1,55 @@
+<div class="container-fluid">
+
+  <div class="row">
+    <div class="col-md-3"></div>
+    <div class="col-md-6">
+      <h1>Hello</h1>
+      <label>
+        <input type="text" placeholder="search" class="form-control" name="srcBy" />
+      </label>
+      <br/>
+      <div>
+        <button type="button" (click)="search()" class="btn">search</button>
+        <button type="reset" (click)="onReset()" class="btn">reset</button>
+      </div>
+    </div>
+    <div class="col-md-3">
+      <br/>
+      <br/>
+      <br/>
+      <br/>
+      <h1 *ngIf="isCheck == true">List Select</h1>
+    </div>
+  </div>
+
+  <br/>
+
+  <div class="row" *ngIf="isCheck == true">
+    <div class="col-md-2"></div>
+    <div class="col-md-7">
+      <table class="center table table-hover">
+        <thead>
+          <th>Name</th>
+          <th>Email</th>
+          <th>Username</th>
+          <th>Address</th>
+        </thead>
+        <tbody>
+          <tr *ngFor="let users of usersList">
+            <td>
+              <input type="checkbox" name="{{users.id}}" (change)="onCheck(users.id,users,$event)"> {{users.name}}</td>
+            <!--checked="checked"-->
+            <td>{{users.email}}</td>
+            <td>{{users.username}}</td>
+            <td>{{users.address.street}}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="col-md-3">
+      <table>
+        <tr *ngFor="let uc of userStat">{{uc.name}}</tr>
+      </table>
+    </div>
+  </div>
+</div>

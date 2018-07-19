@@ -1,0 +1,58 @@
+<div class="row">
+  <div class="col-md-4">
+    <h3>1.Test List</h3>
+    <ul>
+      <li *ngFor="let nl of nameList">{{nl}}</li>
+    </ul>
+    <br/>
+    <input type="text" name="nameTxt" [(ngModel)]="getVal" />
+    <button (click)="onAddList()">Add</button>
+    <button (click)="onResetList()">Reset</button>
+  </div>
+
+  <div class="col-md-4">
+    <h3>2. List datadelete</h3>
+    <ul>
+      <li *ngFor="let ld of listData">{{ld}}</li>
+    </ul>
+    <br/>
+    <input type="text" name="nameTxt2" [(ngModel)]="getVal2" />
+    <button (click)="onRemoveList()">RemoveByName</button>
+  </div>
+
+  <div class="col-md-4"></div>
+  <div class="col-md-12">
+    <hr/>
+  </div>
+</div>
+<div class="row">
+
+  <div class="col-md-4">
+    <h3>3. List datasearch</h3>
+    <ul>
+      <li *ngFor="let sd of bnkData">{{sd}}</li>
+    </ul>
+    <br/>
+    <ul *ngIf="findVal != null">
+      <li *ngFor="let bn of findVal">{{bn}}</li>
+    </ul>
+    <input type="text" name="nameTxt3" [(ngModel)]="getVal3" />
+    <button (click)="onSearch()">Search</button>
+  </div>
+
+  <div class="col-md-6">
+    <h3>4.Box</h3>
+    <div *ngFor="let mem of persData;let i = index" class="box">
+      <a class="close-thik" (click)="onDel(i,mem)">X</a>
+      <div class="textBig"> {{mem.name}}</div>
+      <div class="textSmall"> Age : {{mem.age}}</div>
+    </div>
+    <br/>
+    <br/>
+    <br/> Name :
+    <input type="text" name="nameTxt4" [(ngModel)]="getVal4" /> Age :
+    <input type="text" name="nameTxt5" [(ngModel)]="getVal5" />
+    <button (click)="onSave()">Add</button>
+  </div>
+  <div class="col-md-2"></div>
+</div>

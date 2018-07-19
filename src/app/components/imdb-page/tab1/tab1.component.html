@@ -1,0 +1,19 @@
+<div *ngFor="let mov of movies;let i = index" (click)="onSelect(i,mov)" class="flex-container">
+  <div [ngClass]="{'moviecardSelected':mov.status == true,'moviecard':mov.status == false}">
+    <img [src]="mov.pic" alt="{{mov.name}}" class="image-responsive" style=" width:100%;max-height: 250px">
+    <br>
+    <p class="list-group-item-text">{{mov.name}}</p>
+    <p class="list-group-item-text">ประเภท : {{mov.type}}</p>
+  </div>
+</div>
+<hr>
+
+
+<!-- <div *ngFor="let mov of movies;let i = index" (click)="onSelect(i,mov)" class="flex-container">
+  <div>
+    <img [src]="mov.pic" alt="{{mov.name}}" class="image-responsive" style="width:100%;">
+
+    <p class="list-group-item-text">{{mov.name}}</p>
+    <p class="list-group-item-text">ประเภท : {{mov.type}}</p>
+  </div>
+</div> -->

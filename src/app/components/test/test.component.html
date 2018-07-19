@@ -1,0 +1,16 @@
+<div class="row">
+  <div class="col-md-2"></div>
+  <div class="col-md-4">
+    <button [disabled]="isDisable"> YOLO </button>
+    <button (click)="onDisabled()">OPen yolo</button>
+  </div>
+  <div class="col-md-6">
+    <div *ngIf="isDisable;else edit">
+      <p>{{nameList.name}} {{nameList.surname}}</p>
+    </div>
+    <ng-template #edit>
+      <input type="text" name="name" [(ngModel)]="nameList.name" />
+      <input type="text" name="surname" [(ngModel)]="nameList.surname" />
+    </ng-template>
+  </div>
+</div>

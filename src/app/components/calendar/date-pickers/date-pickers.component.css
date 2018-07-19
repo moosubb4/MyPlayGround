@@ -1,0 +1,35 @@
+.calendar {
+    background: #FFF;
+    box-shadow: 0 0 5px rgba(0, 0, 0, .4);
+    position: absolute;
+    z-index: 10;
+    /* top: 100%; */
+    left: 16px;
+}
+
+.calendar-header {
+    text-align: center;
+    position: relative;
+    line-height: 42px;
+    font-size: 16px;
+}
+
+.calendar-table {
+    table-layout: fixed;
+    border-spacing: 0;
+    border-collapse: collapse;
+}
+
+.calendar-cell {
+    line-height: 40px;
+    width: 40px;
+    text-align: center;
+}
+
+table {
+    border-collapse: collapse;
+}
+
+table, th, td {
+    border: 1px solid black;
+}

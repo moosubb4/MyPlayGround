@@ -1,0 +1,161 @@
+<div class="container">
+  <div class="row">
+    <div class="col-lg-6">
+      <h1>Angular Test Labs</h1>
+      <!-- <input type="text" name="test" [(ngModel)]="toolText" (keyup)="onTooltips()"> -->
+    </div>
+    <div class="col-lg-6">
+
+      <h1>ToolTips! </h1>
+      <p>{{originText}}</p>
+
+      <!-- <p class="tooltips" (mouseover)="onRealtext()" (mouseout)="onTooltips()">{{toolText}}
+        <span class="tooltiptext">{{originText}}</span>
+      </p> -->
+
+      <p class="tooltips">{{toolText}}
+        <span class="tooltiptext">{{originText}}</span>
+      </p>
+      <!-- <p class="tips" style="width: 180px">{{originText}}</p> -->
+
+
+      <table>
+        <tr>
+          <td>Toolstips</td>
+        </tr>
+        <tr>
+          <td class="tooltips"
+              style="width: 180px">
+            <span class="subTips">
+              {{originText}}
+              <span class="tooltiptext">{{originText}}</span>
+            </span>
+          </td>
+        </tr>
+      </table>
+
+    </div>
+  </div>
+</div>
+<hr/>
+
+<div class="kr">
+  <div class="kr--thead">
+    <div class="kr--tr">
+      <div class="kr--td">id</div>
+      <div class="kr--td">userId</div>
+      <div class="kr--td">title</div>
+      <div class="kr--td">completed</div>
+    </div>
+  </div>
+  <div class="kr--tbody">
+    <div class="kr--tr"
+         *ngFor="let item of Todos">
+      <div class="kr--td">{{item.id}}</div>
+      <div class="kr--td">{{item.userId}}</div>
+      <div class="kr--td textTips">{{item.title}}</div>
+      <div class="kr--td">{{item.completed}}</div>
+    </div>
+  </div>
+  <div class="kr--tfoot">
+    <div class="kr--tr btn-foot">
+      <a href="javascript:void(0);"
+         class="btn btn_blue">検索</a>
+      <a href="javascript:void(0);"
+         class="btn btn_pink">選択</a>
+      <a href="javascript:void(0);"
+         class="btn ">閉じる</a>
+    </div>
+  </div>
+</div>
+
+<br/>
+<hr>
+
+<app-date-pickers [optionDate]="{formatDate:'yy/mm/dd'}">
+</app-date-pickers>
+
+<hr>
+
+<input type="number"
+       name="num"
+       style="overflow: hidden;"
+       value="{{plusAdd}}">
+<input type="number"
+       class="nonnum"
+       name="num">
+<div>
+  <div class="ld ld-hourglass ld-spin-fast"
+       style="font-size:100px;color:rgb(255, 2, 2)"></div>
+</div>
+
+<hr/>
+<div class="row">
+  <button type="button"
+          (click)="conVcha()"></button>
+  <input type="text"
+         name="cha"
+         [(ngModel)]="cha">
+  <input type="text"
+         name="varr"
+         [(ngModel)]="varr">
+  <div class="col-md-12">
+
+    <app-paginators> </app-paginators>
+
+    <!-- <app-paginators *ngIf="pageEnable" (pageSelect)="onPagechange($event)" [configOption]="configOption">
+    </app-paginators> -->
+    <button (click)="onSearch()">Search</button>
+
+    <button (click)="onClick(true);btn=true">Ok</button>
+    <button (click)="onClick(false);btn=false">No</button>
+    <hr>
+
+
+  </div>
+</div>
+
+<div class="row">
+  <div class="col-mg-12">
+
+  </div>
+</div>
+<!-- 
+<div class="Table">
+   <div class="Title">
+    <p>This is a Table</p>
+  </div> 
+  <div class="Heading">
+    <div class="Cell">
+      <p>Heading 1</p>
+    </div>
+    <div class="Cell">
+      <p>Heading 2</p>
+    </div>
+    <div class="Cell">
+      <p>Heading 3</p>
+    </div>
+  </div>
+  <div class="Row">
+    <div class="Cell">
+      <p>Row 1 Column 1</p>
+    </div>
+    <div class="Cell">
+      <p class="Celltooltips">Row 1 Column 2Row 1 Column 2Row 1 Column 2Row 1 Column 2</p>
+    </div>
+    <div class="Cell">
+      <p>Row 1 Column 3</p>
+    </div>
+  </div>
+  <div class="Row">
+    <div class="Cell">
+      <p>Row 2 Column 1</p>
+    </div>
+    <div class="Cell">
+      <p>Row 2 Column 2</p>
+    </div>
+    <div class="Cell">
+      <p>Row 2 Column 3</p>
+    </div>
+  </div>
+</div> -->
