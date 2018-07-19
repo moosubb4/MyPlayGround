@@ -13,13 +13,16 @@
            [(ngModel)]="inputDates"
            (keydown.enter)="onFocusOut()"
            (focus)="toggleDatepicker('open')"
-           (focusout)="getInputDate($event)"
-           [maxLength]="maxLen">
+           (focusout)="getInputDate($event)">
+    <!--[maxLength]="maxLen"-->
 
     <div *ngIf="onDatepicker"
          class="calendar">
 
       <div class="calendar-header">
+        <a href="javascript:void(0);">
+          <i class="fas fa-angle-left"></i>
+        </a>
         <select [(ngModel)]="selectYear"
                 (change)="selectedDate()">
           <option *ngFor="let item of showYearLength">{{item.isYear}}</option>
@@ -28,6 +31,9 @@
                 (change)="selectedDate()">
           <option *ngFor="let item of dateJap.monthNames">{{item}}</option>
         </select>
+        <a href="javascript:void(0);">
+          <i class="fas fa-angle-right"></i>
+        </a>
       </div>
 
       <!-- Table Year-->

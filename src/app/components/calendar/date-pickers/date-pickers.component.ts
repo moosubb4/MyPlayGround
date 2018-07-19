@@ -131,11 +131,13 @@ export class DatePickersComponent implements OnInit, OnChanges {
     this.showDropdown = true;
     this.inputDates = '2018/1/3';
 
+
   }
 
   ngOnInit() {
     this.requestOption();
     this.createDate();
+    this.selectedDate(this.setFormattDate(this.inputDates))
     // const date = new Date();
     // date.setFullYear(2018);
     // console.log(date, date.toLocaleDateString('ja-JP-u-ca-japanese'));
@@ -380,7 +382,12 @@ export class DatePickersComponent implements OnInit, OnChanges {
 
   }
 
-  selectedDate() {
+  selectedDate(select?: Datedata) {
+    if (select) {
+      this.selectYear = select.year.toString();
+      this.selectMonth = this.dateJap.monthNames[select.month - 1];
+      this.selectDay = select.day.toString();
+    }
     console.log('​dataDate -> \nyyyy', this.selectYear, '\nmm', this.selectMonth, '\ndd', this.selectDay);
   }
 
