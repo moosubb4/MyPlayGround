@@ -218,6 +218,26 @@ export class DatePickersComponent implements OnInit, OnChanges {
     const weeks: Weeks = { week1: [], week2: [], week3: [], week4: [], week5: [], week6: [] };
     const weekDays = this.weekAndDay(this.inputDates);
 
+    dayCreate.map((e, i) => {
+      if (weeks.week1.length < 7) {
+        weeks.week1[weekDays.date + i] = e;
+      } else if (weeks.week2.length < 7) {
+        weeks.week2.push(e);
+      } else if (weeks.week3.length < 7) {
+        weeks.week3.push(e);
+      } else if (weeks.week4.length < 7) {
+        weeks.week4.push(e);
+      } else if (weeks.week5.length < 7) {
+        weeks.week5.push(e);
+      } else if (weeks.week6.length < 7) {
+        weeks.week6.push(e);
+      }
+    });
+
+    this.weeks = { ...weeks };
+    this.showWeeks = Object.values(weeks);
+    // console.log(this.weeks);
+
     // while (dayCreate.length > 0) {
 
     //   const aaa = [...dayCreate.splice(0, 7)];
@@ -237,26 +257,6 @@ export class DatePickersComponent implements OnInit, OnChanges {
     //   }
 
     // }
-
-    dayCreate.map((e, i) => {
-      if (weeks.week1.length < 7) {
-        // weeks.week1.push(e) ;
-        weeks.week1[weekDays.date + i] = e;
-      } else if (weeks.week2.length < 7) {
-        weeks.week2.push(e);
-      } else if (weeks.week3.length < 7) {
-        weeks.week3.push(e);
-      } else if (weeks.week4.length < 7) {
-        weeks.week4.push(e);
-      } else if (weeks.week5.length < 7) {
-        weeks.week5.push(e);
-      } else if (weeks.week6.length < 7) {
-        weeks.week6.push(e);
-      }
-    });
-
-    this.weeks = { ...weeks };
-    this.showWeeks = Object.values(weeks);
   }
 
   setFormattDate(inputDate: string): Datedata { // set format 2018/07/01 -> {year:2018,month:07,day:01}
@@ -285,7 +285,6 @@ export class DatePickersComponent implements OnInit, OnChanges {
       console.log('​getInputDateDays -> ', aaa);
     }
 
-    this.inputDates = `${this.selectYear}/${this.dateJap.monthNames.findIndex(e => e === this.selectMonth) + 1}/${this.selectDay}`;
     // const dates = new Date(this.inputDates).toLocaleDateString('ja-JP-u-ca-japanese');
     // dates.setFullYear(this.inputDates);
     // (<HTMLInputElement>document.getElementById('inputDate')).blur();
@@ -316,20 +315,16 @@ export class DatePickersComponent implements OnInit, OnChanges {
     return days;
   }
 
-  getYearsLength(years?: string): any[] { // get days of month in between years
+  getYearsLength(years?: string): Yearlength[] { // get days of month in between years
     const yearLength = years.split(':');
     const yStart = +yearLength[0];
     const yEnd = +yearLength[1];
-    const monthInYear = [];
-    // let monthLength = [];
+    const monthInYear: any[] = [];
 
     for (let i = yStart; i <= yEnd; i++) {
       const obj = {};
-      // obj[i] = this.daysInYears(i);
       const set = { isYear: i, monthOfyear: this.daysInYears(i) };
       monthInYear.push(set);
-      // add year like a keys of value
-      // monthInYear.push(this.daysInYears(i));
     }
     return monthInYear;
   }
@@ -420,18 +415,21 @@ export class DatePickersComponent implements OnInit, OnChanges {
       this.selectedYear();
       this.selectMonth = this.dateJap.monthNames[select.month - 1];
       this.selectDay = select.day;
+      this.setShowDate();
     }
   }
 
   selectedYear(y?) {
-    console.log('yyyy', this.selectYear, 'set', y);
-
+    // console.log('yyyy', this.selectYear, 'set', y);
     this.monthOfyear = this.showYearLength[this.showYearLength.findIndex(
-      e => e.isYear === +this.selectYear)].monthOfyear;
+      e => e.isYear === this.selectYear)].monthOfyear;
+
+    this.setShowDate();
   }
 
   selectedMonth(m?) {
-    console.log('​mm', this.selectMonth, 'set', m);
+    // console.log('​mm', this.selectMonth, 'set', m);
+    this.setShowDate();
   }
 
   onNextMonth() {
@@ -446,26 +444,66 @@ export class DatePickersComponent implements OnInit, OnChanges {
     if (go && this.selectMonth) {
       const mIdex = this.dateJap.monthNames.findIndex(e => e === this.selectMonth);
       // console.log('​-> monthOfyear', this.monthOfyear[mIdex]);
+
       if (go === 'next') { // +Indexshow
         const mNext = mIdex + 1 > 11 ? 0 : mIdex + 1;
+
+        if (mIdex >= 11) {
+          this.selectYear++;
+          this.selectedYear();
+        }
+
+        let threeMonth: number[] = [];
+        threeMonth = threeMonth.concat(
+          this.createDays(this.monthOfyear[mNext]),
+          this.createDays(this.monthOfyear[mNext + 1])
+        );
+
+        // console.log('Next threeMonth -> ', threeMonth);
+
         this.selectMonth = this.dateJap.monthNames[mNext];
+
+        // this.createMonth(threeMonth);
         this.createMonth(this.createDays(this.monthOfyear[mNext]));
         // console.log('​-> monthOfyear', this.monthOfyear[mNext]);
       } else if (go === 'previous') {// -Indexshow
         const mBack = mIdex - 1 > -1 ? mIdex - 1 : 11;
+
+        console.log('​onGoMonth -> ', Object.values(this.showYearLength[0])[0]);
+
+        if (mIdex <= 0) {
+          this.selectYear--;
+          this.selectedYear();
+        }
+
+        let threeMonth: number[] = [];
+        threeMonth = threeMonth.concat(
+          this.createDays(this.monthOfyear[mBack]),
+          this.createDays(this.monthOfyear[mBack + 1])
+        );
+
+        // console.log('ฺBack threeMonth -> ', threeMonth);
+
         this.selectMonth = this.dateJap.monthNames[mBack];
+        // this.createMonth(threeMonth);
         this.createMonth(this.createDays(this.monthOfyear[mBack]));
         // console.log('​-> monthOfyear', this.monthOfyear[mBack]);
       } else {
         this.selectMonth = this.dateJap.monthNames[0];
       }
     }
-
+    this.setShowDate();
   }
 
   selectedDay(d?) {
     this.selectDay = d;
+    this.setShowDate();
     // console.log('​dd', this.selectDay, 'set', d);
+  }
+
+  setShowDate() {
+    this.inputDates = `${this.selectYear}/${this.dateJap.monthNames.findIndex(e => e === this.selectMonth) + 1}/${this.selectDay}`;
+    // console.log('​setShowDate -> ', this.inputDates);
   }
 
 
