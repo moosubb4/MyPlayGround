@@ -35,9 +35,10 @@ export class DatePickersComponent implements OnInit, OnChanges {
   public showYearLength: Yearlength[] = [];
 
   public selectJapEra: string;
-  public selectYear: string;
+  public selectYear: number;
   public selectMonth: string;
-  public selectDay: string;
+  public selectDay: number;
+  public monthOfyear: number[] = [];
 
   public formatDate: {
     isEra: boolean;
@@ -137,7 +138,7 @@ export class DatePickersComponent implements OnInit, OnChanges {
   ngOnInit() {
     this.requestOption();
     this.createDate();
-    this.selectedDate(this.setFormattDate(this.inputDates))
+    this.selectedDate(this.setFormattDate(this.inputDates));
     // const date = new Date();
     // date.setFullYear(2018);
     // console.log(date, date.toLocaleDateString('ja-JP-u-ca-japanese'));
@@ -190,37 +191,20 @@ export class DatePickersComponent implements OnInit, OnChanges {
     // const m = new Date(Date.now()).getMonth();
     // const y = new Date(Date.now()).getFullYear();
 
-    const yearLength = this.getYearsLength('1989:2018');
-
-
-    const dayCreate: number[] = this.createDays(31);
-    const weeks: Weeks = { week1: [], week2: [], week3: [], week4: [], week5: [] };
-    while (dayCreate.length > 0) {
-      const aaa = [...dayCreate.splice(0, 7)];
-      if (weeks.week1.length < 7) {
-        weeks.week1 = aaa;
-      } else if (weeks.week2.length < 7) {
-        weeks.week2 = aaa;
-      } else if (weeks.week3.length < 7) {
-        weeks.week3 = aaa;
-      } else if (weeks.week4.length < 7) {
-        weeks.week4 = aaa;
-      } else if (weeks.week5.length < 7) {
-        weeks.week5 = aaa;
-      }
-    }
-
-    this.weeks = { ...weeks };
-    this.showWeeks = Object.values(weeks);
-
+    const yearLength: Yearlength[] = this.getYearsLength('1989:2018');
     this.showYearLength = yearLength;
+
+    let dayCreate: number[] = [];
+    dayCreate = dayCreate.concat(this.createDays(31));
+    this.createMonth(dayCreate);
+
     // const aaa = yearLength.map(e => {
     //   return e.isYear;
     // });
 
     // console.log('generateDaysYearLength -> ', yearLength);
     console.log('​createDays -> ', dayCreate);
-    console.log(this.weekAndDay());
+    // console.log(this.weekAndDay(this.inputDates));
     console.log('weeks', this.weeks);
 
     // console.log('generateDays->\n', this.daysInYears(2018));
@@ -228,6 +212,51 @@ export class DatePickersComponent implements OnInit, OnChanges {
 
     // console.log('daysInMonth->', this.daysInMonth(y, m));
 
+  }
+
+  createMonth(dayCreate: number[]) {
+    const weeks: Weeks = { week1: [], week2: [], week3: [], week4: [], week5: [], week6: [] };
+    const weekDays = this.weekAndDay(this.inputDates);
+
+    // while (dayCreate.length > 0) {
+
+    //   const aaa = [...dayCreate.splice(0, 7)];
+
+    //   if (weeks.week1.length < 7) {
+    //     weeks.week1 = aaa;
+    //   } else if (weeks.week2.length < 7) {
+    //     weeks.week2 = aaa;
+    //   } else if (weeks.week3.length < 7) {
+    //     weeks.week3 = aaa;
+    //   } else if (weeks.week4.length < 7) {
+    //     weeks.week4 = aaa;
+    //   } else if (weeks.week5.length < 7) {
+    //     weeks.week5 = aaa;
+    //   } else if (weeks.week6.length < 7) {
+    //     weeks.week6 = aaa;
+    //   }
+
+    // }
+
+    dayCreate.map((e, i) => {
+      if (weeks.week1.length < 7) {
+        // weeks.week1.push(e) ;
+        weeks.week1[weekDays.date + i] = e;
+      } else if (weeks.week2.length < 7) {
+        weeks.week2.push(e);
+      } else if (weeks.week3.length < 7) {
+        weeks.week3.push(e);
+      } else if (weeks.week4.length < 7) {
+        weeks.week4.push(e);
+      } else if (weeks.week5.length < 7) {
+        weeks.week5.push(e);
+      } else if (weeks.week6.length < 7) {
+        weeks.week6.push(e);
+      }
+    });
+
+    this.weeks = { ...weeks };
+    this.showWeeks = Object.values(weeks);
   }
 
   setFormattDate(inputDate: string): Datedata { // set format 2018/07/01 -> {year:2018,month:07,day:01}
@@ -267,7 +296,7 @@ export class DatePickersComponent implements OnInit, OnChanges {
   }
 
   toDays(d) {
-    d = d || 0;
+    d = d || new Date(Date.now()).getDay();
     return d / 24 / 60 / 60 / 1000;
   }
 
@@ -370,26 +399,73 @@ export class DatePickersComponent implements OnInit, OnChanges {
     }
   }
 
-  weekAndDay() { // one month has 5 week
+  weekAndDay(inputDate?: string) { // one month has 5 week
 
-    const date = new Date(this.inputDates);
+    const date = new Date(inputDate);
     const days = // this.dateJap.dayNamesMin;
       ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
     const prefixes = ['First', 'Second', 'Third', 'Fourth', 'Fifth'];
-    console.log(date.getDate());
     const pre = 0 | (date.getDate() / 7);
-    return prefixes[pre] + ' ' + days[date.getDay()];
+    // return prefixes[pre] + ' ' + days[date.getDay()];
+    return { week: pre, date: date.getDay() };
 
   }
 
   selectedDate(select?: Datedata) {
     if (select) {
-      this.selectYear = select.year.toString();
+      this.selectYear = select.year;
+      this.selectedYear();
       this.selectMonth = this.dateJap.monthNames[select.month - 1];
-      this.selectDay = select.day.toString();
+      this.selectDay = select.day;
     }
-    console.log('​dataDate -> \nyyyy', this.selectYear, '\nmm', this.selectMonth, '\ndd', this.selectDay);
   }
+
+  selectedYear(y?) {
+    console.log('yyyy', this.selectYear, 'set', y);
+
+    this.monthOfyear = this.showYearLength[this.showYearLength.findIndex(
+      e => e.isYear === +this.selectYear)].monthOfyear;
+  }
+
+  selectedMonth(m?) {
+    console.log('​mm', this.selectMonth, 'set', m);
+  }
+
+  onNextMonth() {
+
+  }
+
+  onPreviousMonth() {
+
+  }
+
+  onGoMonth(go?: string) {
+    if (go && this.selectMonth) {
+      const mIdex = this.dateJap.monthNames.findIndex(e => e === this.selectMonth);
+      // console.log('​-> monthOfyear', this.monthOfyear[mIdex]);
+      if (go === 'next') { // +Indexshow
+        const mNext = mIdex + 1 > 11 ? 0 : mIdex + 1;
+        this.selectMonth = this.dateJap.monthNames[mNext];
+        this.createMonth(this.createDays(this.monthOfyear[mNext]));
+        // console.log('​-> monthOfyear', this.monthOfyear[mNext]);
+      } else if (go === 'previous') {// -Indexshow
+        const mBack = mIdex - 1 > -1 ? mIdex - 1 : 11;
+        this.selectMonth = this.dateJap.monthNames[mBack];
+        this.createMonth(this.createDays(this.monthOfyear[mBack]));
+        // console.log('​-> monthOfyear', this.monthOfyear[mBack]);
+      } else {
+        this.selectMonth = this.dateJap.monthNames[0];
+      }
+    }
+
+  }
+
+  selectedDay(d?) {
+    this.selectDay = d;
+    // console.log('​dd', this.selectDay, 'set', d);
+  }
+
+
 
 
 }

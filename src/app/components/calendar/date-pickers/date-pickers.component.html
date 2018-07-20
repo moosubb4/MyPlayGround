@@ -20,18 +20,25 @@
          class="calendar">
 
       <div class="calendar-header">
-        <a href="javascript:void(0);">
+        <a href="javascript:void(0);"
+           (click)="onGoMonth('previous')">
           <i class="fas fa-angle-left"></i>
         </a>
-        <select [(ngModel)]="selectYear"
-                (change)="selectedDate()">
-          <option *ngFor="let item of showYearLength">{{item.isYear}}</option>
-        </select>
-        <select [(ngModel)]="selectMonth"
-                (change)="selectedDate()">
-          <option *ngFor="let item of dateJap.monthNames">{{item}}</option>
-        </select>
-        <a href="javascript:void(0);">
+
+        <div>
+          <select [(ngModel)]="selectYear"
+                  (change)="selectedYear($event.target.value)">
+            <option *ngFor="let item of showYearLength">{{item.isYear}}</option>
+          </select>
+          
+          <select [(ngModel)]="selectMonth"
+                  (change)="selectedMonth($event.target.value)">
+            <option *ngFor="let item of dateJap.monthNames">{{item}}</option>
+          </select>
+        </div>
+
+        <a href="javascript:void(0);"
+           (click)="onGoMonth('next')">
           <i class="fas fa-angle-right"></i>
         </a>
       </div>
@@ -42,7 +49,9 @@
           <th *ngFor="let item of dateJap.dayNamesMin">{{item}}</th>
         </tr>
         <tr *ngFor="let w of showWeeks">
-          <td *ngFor="let d of w">{{d}}</td>
+          <td *ngFor="let d of w"
+              [ngClass]="{selectDay: selectDay === d }"
+              (click)="selectedDay(d)">{{d}}</td>
         </tr>
       </table>
     </div>

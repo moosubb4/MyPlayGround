@@ -25,6 +25,7 @@ export interface Weeks {
     week3?: number[];
     week4?: number[];
     week5?: number[];
+    week6?: number[];
 }
 
 export interface Yearlength {
