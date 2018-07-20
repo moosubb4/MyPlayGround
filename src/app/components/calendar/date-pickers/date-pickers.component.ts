@@ -271,6 +271,7 @@ export class DatePickersComponent implements OnInit, OnChanges {
   }
 
   getInputDate() { // get Input when enter
+
     if (!this.selectJapEra) {
       const d = new Date();
       const dateInput: string = this.inputDates
@@ -280,9 +281,11 @@ export class DatePickersComponent implements OnInit, OnChanges {
       const date = this.setFormattDate(dateInput);
       const aaa = this.isJapYear(date);
 
-      this.inputDates = aaa;
+      // this.inputDates = aaa;
       console.log('​getInputDateDays -> ', aaa);
     }
+
+    this.inputDates = `${this.selectYear}/${this.dateJap.monthNames.findIndex(e => e === this.selectMonth) + 1}/${this.selectDay}`;
     // const dates = new Date(this.inputDates).toLocaleDateString('ja-JP-u-ca-japanese');
     // dates.setFullYear(this.inputDates);
     // (<HTMLInputElement>document.getElementById('inputDate')).blur();
@@ -400,7 +403,7 @@ export class DatePickersComponent implements OnInit, OnChanges {
   }
 
   weekAndDay(inputDate?: string) { // one month has 5 week
-
+    console.log('​weekAndDay -> inputDate', inputDate);
     const date = new Date(inputDate);
     const days = // this.dateJap.dayNamesMin;
       ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
