@@ -7,7 +7,7 @@
     /* width: 245px;
     height: 280px; */
     width: 205px;
-    height: 260px;
+    height: 245px;
     /* padding: 9px; */
 }
 
@@ -93,6 +93,16 @@ td.selectDay {
     top: 410px;
     width: 250px;
     height: 300px;
+}
+
+.pointer {
+    cursor: pointer;
+    /* pointer-events: none; */
+}
+
+.disableClick {
+    cursor: not-allowed;
+    pointer-events: none;
 }
 
 /*calerder-flex*/

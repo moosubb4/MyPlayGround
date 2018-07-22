@@ -32,3 +32,10 @@ export interface Yearlength {
     isYear?: number;
     monthOfyear?: number[];
 }
+
+export interface Daydetail {
+    day?: number;
+    month?: number;
+}
+
+

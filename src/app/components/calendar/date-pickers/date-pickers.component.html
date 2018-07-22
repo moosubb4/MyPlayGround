@@ -30,7 +30,7 @@
                   (change)="selectedYear($event.target.value)">
             <option *ngFor="let item of showYearLength">{{item.isYear}}</option>
           </select>
-          
+
           <select [(ngModel)]="selectMonth"
                   (change)="selectedMonth($event.target.value)">
             <option *ngFor="let item of dateJap.monthNames">{{item}}</option>
@@ -50,6 +50,7 @@
         </tr>
         <tr *ngFor="let w of showWeeks">
           <td *ngFor="let d of w"
+              class="pointer"
               [ngClass]="{selectDay: selectDay === d }"
               (click)="selectedDay(d)">{{d}}</td>
         </tr>
