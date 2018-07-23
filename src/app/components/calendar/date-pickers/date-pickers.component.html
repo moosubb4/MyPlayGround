@@ -1,19 +1,22 @@
 <div>
   <div class="calendar-container">
 
-    <select *ngIf="showDropdown"
-            [(ngModel)]="selectJapEra">
-      <option></option>
-      <option *ngFor="let item of yearShort">{{item}}</option>
-    </select>
+    <div class="input-container ">
 
-    <input type="tel"
-           id="inputDate"
-           #inputTel
-           [(ngModel)]="inputDates"
-           (keydown.enter)="onFocusOut()"
-           (focus)="toggleDatepicker('open')"
-           (focusout)="getInputDate($event)">
+      <select *ngIf="showDropdown"
+              [(ngModel)]="selectJapEra"
+              (change)="selectEra($event)">
+        <option *ngFor="let item of yearShort">{{item}}</option>
+      </select>
+
+      <input type="tel"
+             id="inputDate"
+             #inputTel
+             [(ngModel)]="inputDates"
+             (keydown.enter)="onFocusOut()"
+             (focus)="toggleDatepicker('open')"
+             (focusout)="getInputDate($event)">
+    </div>
     <!--[maxLength]="maxLen"-->
 
     <div *ngIf="onDatepicker"
@@ -33,7 +36,8 @@
 
           <select [(ngModel)]="selectMonth"
                   (change)="selectedMonth($event.target.value)">
-            <option *ngFor="let item of dateJap.monthNames">{{item}}</option>
+            <option *ngFor="let item of dateJap.monthNames;let i = index"
+                    [ngValue]="i">{{item}}</option>
           </select>
         </div>
 
@@ -51,8 +55,10 @@
         <tr *ngFor="let w of showWeeks">
           <td *ngFor="let d of w"
               class="pointer"
-              [ngClass]="{selectDay: selectDay === d }"
-              (click)="selectedDay(d)">{{d}}</td>
+              [ngClass]="{
+                selectDay: selectDay === d.day && selectMonth === d.month,
+                disableDay: selectMonth !== d.month }"
+              (click)="selectedDay(d)">{{d.day}} </td>
         </tr>
       </table>
     </div>
