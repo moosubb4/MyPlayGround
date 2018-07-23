@@ -63,11 +63,16 @@ tr:first-child {
     background-color: #e2dcdc;
 }
 
+td {
+    border: 3px solid white;
+}
+
 th,
 td {
-    /* border: 1px hidden black; */
+    /* border: 1px solid black; */
     padding: 3px;
     text-align: center;
+    /* border: 1px solid black; */
 }
 
 th:first-child {

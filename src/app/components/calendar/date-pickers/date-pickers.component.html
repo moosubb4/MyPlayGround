@@ -49,9 +49,11 @@
 
       <!-- Table Year-->
       <table class="calendar-table">
+
         <tr>
           <th *ngFor="let item of dateJap.dayNamesMin">{{item}}</th>
         </tr>
+
         <tr *ngFor="let w of showWeeks">
           <td *ngFor="let d of w"
               class="pointer"

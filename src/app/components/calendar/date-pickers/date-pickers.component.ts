@@ -246,11 +246,8 @@ export class DatePickersComponent implements OnInit, OnChanges {
     dayCreate.map((e, i) => {
 
       if (weeks.week1.length < 7) {
-        weeks.week1[weekDays.date + i] = e;
 
-        if ((weekDays.date + i - 6) >= 0) {
-          weeks.week1[0] = { day: inYear.monthOfyear[this.selectMonth - 1], month: this.selectMonth - 1 };
-        }
+        weeks.week1[weekDays.date + i] = e;
 
       } else if (weeks.week2.length < 7) {
         weeks.week2.push(e);
@@ -271,6 +268,9 @@ export class DatePickersComponent implements OnInit, OnChanges {
       }
     });
     // console.log('​DatePickersComponent -> createMonth -> ', weeks.week1.findIndex(el => !el));
+    weeks.week1[0] = { day: inYear.monthOfyear[this.selectMonth] - 1, month: this.selectMonth - 1 };
+    weeks.week1[1] = { day: inYear.monthOfyear[this.selectMonth] - 0, month: this.selectMonth - 1 };
+
     this.weeks = { ...weeks };
     this.showWeeks = Object.values(weeks);
     console.log('​showWeeks', this.showWeeks);
