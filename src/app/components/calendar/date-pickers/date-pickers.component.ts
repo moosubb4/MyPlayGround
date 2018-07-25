@@ -479,7 +479,7 @@ export class DatePickersComponent implements OnInit, OnChanges {
 
 
   selectedYear(y?) {
-    console.log('​selectedYear->', y, this.selectYear);
+    // console.log('​selectedYear->', y, this.selectYear);
     // this.createMonth(this.createDays(inYear.monthOfyear[this.selectMonth], this.selectMonth));
     this.setMonthOfYear();
     this.setShowDate();
@@ -488,7 +488,7 @@ export class DatePickersComponent implements OnInit, OnChanges {
   }
 
   selectedMonth(m?) {
-    console.log('​selectedMonth->', m, this.selectMonth);
+    // console.log('​selectedMonth->', m, this.selectMonth);
     this.setShowDate();
     this.onGoMonth('go');
   }
@@ -497,7 +497,7 @@ export class DatePickersComponent implements OnInit, OnChanges {
     // return new Promise(resolve => {
     this.monthOfyear = this.showYearLength[this.showYearLength.findIndex(
       e => e.isYear === +this.selectYear)].monthOfyear;
-    console.log('​monthOfyear', this.monthOfyear);
+    // console.log('​monthOfyear', this.monthOfyear);
     // resolve(this.monthOfyear);
     // });
   }
@@ -516,14 +516,13 @@ export class DatePickersComponent implements OnInit, OnChanges {
           this.selectYear = this.selectYear >= this.showYearLength[0].isYear
             ? this.showYearLength[0].isYear
             : this.selectYear++;
-          console.log('​onGoMonth Next-> ', this.selectYear);
           // this.selectedYear();
         }
 
         this.selectMonth = mNext;
         this.setShowDate();
         this.createMonth(this.createDays(this.monthOfyear[mNext], this.selectMonth));
-        console.log('mNext', this.monthOfyear[mNext], mNext);
+        // console.log('mNext', this.monthOfyear[mNext], mNext);
 
       } else if (go === 'previous') {// -Indexshow
         const mBack = mIdex - 1 > -1 ? mIdex - 1 : 11;
@@ -532,19 +531,14 @@ export class DatePickersComponent implements OnInit, OnChanges {
           this.selectYear = this.selectYear > this.showYearLength[lengthY - 1].isYear
             ? this.selectYear - 1
             : this.showYearLength[lengthY - 1].isYear;
-          console.log('​onGoMonth Back-> ', this.selectYear);
-          // this.selectedYear();
+          // console.log('​onGoMonth Back-> ', this.selectYear);
         }
 
         this.selectMonth = mBack;
         this.setShowDate();
         this.createMonth(this.createDays(this.monthOfyear[mBack], this.selectMonth));
-        console.log('​mBack', this.monthOfyear[mBack], mBack);
+        // console.log('​mBack', this.monthOfyear[mBack], mBack);
       } else {
-
-        console.log('​onGoMonth -> ', go);
-        //     this.selectMonth = this.dateJap.monthNames[mIdex];
-        //     this.createMonth(this.createDays(this.monthOfyear[mIdex]));
         this.createMonth(this.createDays(this.monthOfyear[mIdex], this.selectMonth));
       }
     }
