@@ -69,6 +69,21 @@
   </div>
 </div>
 
+<div class="flex-container">
+  <div>
+    <div>Name</div>
+    <div>Age</div>
+  </div>
+  <div *ngFor="let item of showData">
+    <div>{{item.name}}</div>
+    <div>{{item.age}}</div>
+  </div>
+</div>
+
+<app-paginators [configOption]="sortTable"
+                [dataSource]="dataSource"
+                (SortBack)="lazyLoadPage($event)"></app-paginators>
+
 <br/>
 <hr>
 
@@ -103,12 +118,12 @@
 
     <!-- <app-paginators> </app-paginators> -->
 
-    <!-- <app-paginators *ngIf="pageEnable" (pageSelect)="onPagechange($event)" [configOption]="configOption">
+    <!-- <app-paginators  (pageSelect)="onPagechange($event)" [configOption]="configOption">
     </app-paginators> -->
-    <button (click)="onSearch()">Search</button>
+    <!-- <button (click)="onSearch()">Search</button>
 
     <button (click)="onClick(true);btn=true">Ok</button>
-    <button (click)="onClick(false);btn=false">No</button>
+    <button (click)="onClick(false);btn=false">No</button> -->
     <hr>
 
 

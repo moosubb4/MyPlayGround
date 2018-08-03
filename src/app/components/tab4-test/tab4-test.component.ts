@@ -9,6 +9,16 @@ export interface Todo {
   completed: boolean;
 }
 
+export interface User {
+  user: string;
+  age: number;
+}
+
+export interface Payload {
+  data: User[];
+  totalSize: number;
+}
+
 // export interface Configoption {
 //   rowSelection: number[];
 //   totalSize: number;
@@ -41,6 +51,9 @@ export class Tab4TestComponent implements OnInit {
   public pageEnable: boolean;
   public dafuq = true;
   public btn = false;
+  public sortTable;
+  public dataSource: Payload;
+  public showData: any[] = [];
 
   constructor(private searchServices: SearchService) {
     this.msg = '123456789abcdefghijKuyeieiKuykuy';
@@ -51,6 +64,28 @@ export class Tab4TestComponent implements OnInit {
     this.onTooltips();
     // this.onSearch();
     this.plusAdd = this.onAdd(1, 9);
+
+    const userData = [
+      { name: 'kuy', age: 18 },
+      { name: 'kuy2', age: 19 },
+      { name: 'kuy3', age: 18 },
+      { name: 'kuy4', age: 19 },
+      { name: 'kuy5', age: 18 },
+      { name: 'kuy6', age: 19 },
+      { name: 'kuy7', age: 18 },
+      { name: 'kuy8', age: 19 },
+      { name: 'kuy9', age: 18 },
+      { name: 'kuy10', age: 19 },
+      { name: 'kuy11', age: 18 },
+      { name: 'kuy12', age: 19 }
+    ];
+
+    const inputData = {
+      data: userData,
+      totalSize: userData.length
+    };
+
+    this.setPagination(inputData, 1);
 
     // this.doSomething(this.foo);
 
@@ -196,6 +231,29 @@ export class Tab4TestComponent implements OnInit {
   //   // console.log('Hi Mouses');
   // }
 
+
+  setPagination(data: any, setPage?: number) {
+    if (data && Object.keys(data).length > 0) {
+      // initial pagination
+      this.sortTable = {
+        rowSelection: 5, // select row to show
+        totalSize: data.totalSize, // total size data length
+        row: 5, // row to show
+        setPage: setPage // if u wanna set first page when rerender
+      };
+
+      this.dataSource = data.data; // DataInput
+    }
+  }
+
+  lazyLoadPage(event) {
+    if (event) {
+      this.showData = event.data;
+      // rereder table
+      // Expression Changed After It Has Been Checked Error: problem
+      // console.log('​lazyLoadePage -> ', event);
+    }
+  }
 
 
 }
