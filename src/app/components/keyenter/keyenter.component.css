@@ -2,6 +2,10 @@ input[type="text"]:focus {
     background-color: #76FF03
 }
 
+.elm-focus {
+    box-shadow: #76FF03;
+}
+
 .lds-ripple {
     display: inline-block;
     position: relative;

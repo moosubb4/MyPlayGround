@@ -37,6 +37,7 @@ import { SwitchStarComponent } from './common/switch-star/switch-star.component'
 import { KeyenterComponent } from './components/keyenter/keyenter.component';
 import { KeyenterDirective } from './directives/keyenter.directive';
 import { DatePickersComponent } from './components/calendar/date-pickers/date-pickers.component';
+import { EnterkeysDirective } from './directives/enterkeys.directive';
 // import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 // import { MatButtonModule, MatCheckboxModule } from '@angular/material';
 
@@ -84,7 +85,8 @@ const appRoutes: Routes = [
     KeyenterDirective,
     // CalendarDateComponent,
     // DropdowncalendarComponent,
-    DatePickersComponent
+    DatePickersComponent,
+    EnterkeysDirective
   ],
   imports: [
     BrowserModule,

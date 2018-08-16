@@ -158,5 +158,10 @@ export class KeyenterComponent implements OnInit {
     return byte;
   }
 
+  onEnter(e) {
+    const nextElm = e.srcElement.nextElementSibling;
+    console.log('\n​onEnter -> ', nextElm);
+  }
+
 
 }
