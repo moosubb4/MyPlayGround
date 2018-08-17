@@ -1,11 +1,23 @@
-import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter, OnChanges } from '@angular/core';
 
 export interface Configoption {
-  rowSelection?: number[];
-  totalSize?: number;
-  row?: number;
-  displayNumber?: number;
+  rowSelection: number[];
+  totalSize: number;
+  row: number;
+  setPage?: number; // first page when reload pagiantion
 }
+
+export interface SortBack {
+  page: number;
+  rowSelect: number;
+  data?: any[];
+}
+
+// export interface Contents {
+//   result?: any[];
+//   totalSize?: number;
+// }
+
 
 @Component({
   selector: 'app-paginators',
@@ -13,248 +25,177 @@ export interface Configoption {
   styleUrls: ['./paginators.component.css']
 })
 
-export class PaginatorsComponent implements OnInit {
-  // public page: number;
-  // public pageCurrent: number[] = [];
-  // public row: number;
-  // public size: number;
-  // public sizing: number[] = [];
-  // public totalSize: number;
-  // public sort: number;
-  // public rowsPerPageOptions: number[] = [];
-  // public displayNumber: number;
-  // public enable: boolean;
-  // @Input() rowSelection: number[] = [];
-  // @Output() pageSelect: EventEmitter<number>; // = new EventEmitter(); // = new EventEmitter<number>();
-  // @Input() configOption: Configoption;
+export class PaginatorsComponent implements OnInit, OnChanges {
 
-  public size: number;
-  public page: number[] = [];
-  public pageSplice: number[] = [];
-  public pageCurrent: number;
+  public page: number;
+  public pageCurrent: number[] = [];
   public row: number;
-  public rowPage: number[] = [];
-  public displayPage: number;
+  public size: number;
+  public sizing: number[] = [];
   public totalSize: number;
-  public focusPage: number;
-  public numberOfpage: number;
+  public sort: number;
+  public rowsPerPageOptions: number[] = [];
+  public SortBacks: SortBack = { page: 1, rowSelect: 10 };
+  public rowSelection: number[] = [];
+  public disabled: boolean;
+  public sortSource: any[] = [];
+  // @Input() rowSelection: number[] = []; // row per page to display option [10,20,30]
+  @Output() pageSelect: EventEmitter<number> = new EventEmitter(); // = new EventEmitter<number>();
+  @Input() configOption: Configoption;
+  @Output() SortBack: EventEmitter<SortBack> = new EventEmitter();
+  @Input() position: string;
+  @Input() dataSource: any[] = [];
 
   constructor() {
-    this.totalSize = 100;
-    this.displayPage = 5;
-    this.rowPage = [5, 10, 15];
-    this.row = 10;
-    this.focusPage = 1;
-    this.numberOfpage = 5;
+    this.disabled = true;
+    this.rowSelection = [5, 10, 20];
+    this.row = 0;
+    this.totalSize = 0;
+    this.size = 0;
+    this.position = 'R';
   }
-
 
   ngOnInit() {
-    this.pageDisplays();
+    this.page = 1;
+    Object.keys(this.configOption).length > 0 ? this.disabled = true : this.disabled = false;
   }
 
-  pageDisplays() {
-    const index = 10;
-    const sizePage = 5;
-    const arr = [];
-    let arrSplic = [];
+  ngOnChanges() {
+    if (Object.keys(this.configOption).length > 0) {
+      this.disabled = true;
+      this.row = this.configOption.row;
+      this.totalSize = this.configOption.totalSize;
+      this.rowsPerPageOptions = this.rowSelection;
+      this.row = (this.rowsPerPageOptions.filter(key => this.row === key))[0];
+      this.size = Math.ceil(this.totalSize / this.row);
+      if (this.size) {
+        this.sizing = Array(this.size).fill(2).map((x, i) => i + 1);
+      }
+      if (this.pageCurrent.length < 1) {
+        this.pageCurrent = this.sizing.slice(0, 5);
+      }
 
+      if (this.configOption.setPage) {
+        this.page = this.configOption.setPage;
+      }
 
-    // this.size = Math.ceil(this.totalSize / this.displayPage);
-    this.size = Math.ceil(this.totalSize / this.row);
-    this.page = Array(this.size).fill(2).map((x, i) => i + 1);
-    // this.pageCurrent = this.page.slice(0, this.displayPage);
-    arrSplic = [...this.page];
-
-    while (arrSplic.length > 0) {
-      arr.push(arrSplic.splice(0, sizePage));
+      this.SortBacks.rowSelect = this.row;
+      this.SortBacks.page = this.page;
+    } else {
+      this.disabled = false;
     }
 
-    this.pageSplice = arr;
-    this.pageCurrent = this.pageSplice[0];
-    console.log('size', this.size, 'page', this.page, 'pageCurrent', this.pageCurrent, 'pageSplic', this.pageSplice, 'arrSplic', arrSplic);
-  }
-
-  goFirst() {
-    if (this.focusPage !== 1) {
-      this.focusPage = 1;
-      console.log(`goFirst()`);
-      this.showPage(this.focusPage);
-    }
-  }
-
-  golast() {
-    if (this.focusPage !== this.size) {
-      this.focusPage = this.size;
-      console.log(`golast()`);
-      this.showPage(this.focusPage);
+    if (this.dataSource) {
+      this.sourceManage([...this.dataSource])
+        .then((e: any[]) => {
+          this.sortSource = e;
+          this.sentSort(this.configOption.setPage);
+          this.showPage(this.configOption.setPage);
+        });
     }
   }
 
-  onPrevious() {
-    if (this.focusPage > 1) {
-      this.focusPage--;
-      console.log(`onPrevious()`);
-      this.showPage(this.focusPage);
-    }
-  }
-
-  onNext() {
-    if (this.focusPage < this.size) {
-      this.focusPage++;
-      console.log(`onNext()`);
-      this.showPage(this.focusPage);
-    }
-  }
-
-  onSelectrow() {
-    console.log(`onSelectrow(${this.row})`);
-    this.pageDisplays();
+  sourceManage(data: any[]) {
+    return new Promise(resolve => {
+      const src = [];
+      while (data.length > 0) {
+        src.push(data.splice(0, this.row));
+      }
+      resolve(src);
+    });
   }
 
   onSelectpage(pg) {
-    this.focusPage = pg;
-    console.log(`onSelectpage(${pg})`);
+    this.page = pg;
+    this.pageSelect.emit(pg);
+    this.sentSort(pg);
   }
 
-  showPage(pg) {
-    let index = 0;
+  goFirst() {
+    this.page = 1;
+    this.showPage(this.page);
+  }
 
-    // console.log('this.pageCurrent++', this.pageCurrent, 'pg', pg, this.pageCurrent[this.numberOfpage - 1]);
+  golast() {
+    this.page = this.size;
+    this.showPage(this.page);
+  }
 
-    if (pg > this.pageCurrent[this.numberOfpage - 1]) {
-      this.pageCurrent = this.pageSplice[index + 1];
-      console.log('this.pageCurrent++', this.pageSplice[index + 1]);
-      // this.pageCurrent = this.pageSplice[index + 1];
-    } else if (pg < this.pageCurrent[0]) {
-      this.pageCurrent = this.pageSplice[index + 0];
-      // console.log('this.pageCurrent--', this.pageSplice[0]);
+  onPrevious() {
+    if (this.page <= 1) {
+      this.page = 1;
+    } else {
+      this.page--;
     }
-    // else {
-    //   console.log('this.pageCurrent', this.pageSplice[index--]);
-    //   // this.pageCurrent = this.pageSplice[index - 1];
-    // }
-
-    // this.pageCurrent = this.pageSplice[0];
-    // if (pg > this.pageSplice[index][4] && index <= 0) {
-    //   index++;
-    //   this.pageCurrent = this.pageSplice[index];
-    //   console.log('this.pageCurrent++', this.pageCurrent, 'pg', pg, 'Index', index);
-    // } else { // if (pg < this.pageSplice[index][0] && index > 0)
-    //   index--;
-    //   this.pageCurrent = this.pageSplice[index];
-    //   console.log('this.pageCurrent--', this.pageCurrent, 'pg', pg, 'Index', index);
-    // }
-    // this.pageCurrent = this.page.slice(pg - 1, pg + 4);
+    this.showPage(this.page);
   }
 
-
-
-
-
-
-  // constructor() {
-  //   this.row = 5;
-  //   this.totalSize = 15;
-  //   this.rowsPerPageOptions = [5, 10, 20];
-  //   this.displayNumber = 5;
-  //   // this.enable = false;
-  //   // this.row = this.configOption.row;
-  //   // this.size = Math.ceil(this.totalSize / this.row);
-  //   // this.page = 1;
-  //   // this.sizing = Array(this.size).fill(2).map((x, i) => i + 1);
-  //   // this.pageCurrent = this.sizing.slice(0, 5);
-  //   // this.rowSelection = [5, 10, 20];
-  //   // this.page =
-  //   // this.pageSelect = 1;
-
-  // }
-
-  // ngOnInit() {
-
-  //   console.log('----Config----');
-  //   console.log(this.configOption);
-
-  //   if (this.configOption !== undefined) {
-  //     this.enable = true;
-  //     this.onCreate();
-  //   } else {
-  //     this.row = (this.rowsPerPageOptions.filter(key => this.row === key))[0];
-  //     this.size = Math.ceil(this.totalSize / this.row);
-  //     this.sizing = Array(this.size).fill(2).map((x, i) => i + 1);
-  //     this.page = 1;
-  //     this.pageCurrent = this.sizing.slice(0, this.displayNumber);
-  //   }
-
-
-  // }
-
-  // onCreate() {
-  //   this.row = this.configOption.row;
-  //   this.totalSize = this.configOption.totalSize;
-  //   this.rowsPerPageOptions = this.configOption.rowSelection;
-  //   this.displayNumber = this.configOption.displayNumber;
-  //   this.page = 1;
-  //   this.pageSelect.emit(1);
-
-  //   this.row = (this.rowsPerPageOptions.filter(key => this.row === key))[0];
-  //   this.size = Math.ceil(this.totalSize / this.row);
-  //   this.sizing = Array(this.size).fill(2).map((x, i) => i + 1);
-  //   this.pageCurrent = this.sizing.slice(0, this.displayNumber);
-  // }
-
-  // onSelectpage(pg) {
-  //   this.page = pg;
-  //   this.pageSelect.emit(pg);
-  // }
-
-  // goFirst() {
-  //   this.page = 1;
-  //   this.showPage(this.page);
-  // }
-
-  // golast() {
-  //   this.page = this.size;
-  //   this.showPage(this.page);
-  // }
-
-  // onPrevious() {
-  //   if (this.page <= 1) {
-  //     this.page = 1;
-  //   } else {
-  //     this.page--;
-  //   }
-  //   this.showPage(this.page);
-  // }
-
-  // onNext() {
-  //   if (this.page === this.size) {
-  //     this.page = this.size;
-  //   } else {
-  //     this.page++;
-  //   }
-  //   this.showPage(this.page);
-  // }
+  onNext() {
+    if (this.page === this.size) {
+      this.page = this.size;
+    } else {
+      this.page++;
+    }
+    this.showPage(this.page);
+  }
 
   // showPage(pg) {
-  //   this.pageSelect.emit(pg);
   //   const last = this.size - 2;
   //   const sizePage = this.pageCurrent.length;
   //   if (this.page > 3 && this.page < last) {
   //     this.pageCurrent = this.sizing.slice(pg - 3, pg + 2);
+  //     this.sentSort(pg);
   //   } else if (this.page > last) {
-  //     this.pageCurrent = this.sizing.slice(this.size - sizePage, this.size);
+  //     this.pageCurrent = this.sizing.slice(this.size - sizePage > 1 ? this.size - sizePage : 0, this.size);
+  //     this.sentSort(pg);
   //   } else if (this.page < sizePage) {
   //     this.pageCurrent = this.sizing.slice(0, 5);
+  //     this.sentSort(pg);
   //   } else {
-  //     this.pageCurrent = this.sizing.slice(pg - 3, this.size);
+  //     this.pageCurrent = this.sizing.slice(pg - 3 > 1 ? pg - 3 : 0, this.size);
+  //     this.sentSort(pg);
   //   }
   // }
 
-  // onSelectrow() {
-  //   this.size = Math.ceil(this.totalSize / this.row);
-  //   this.sizing = Array(this.size).fill(2).map((x, i) => i + 1);
-  //   this.goFirst();
-  // }
+  showPage(pg) {
+    const last = this.size - 2;
+    const sizePage = this.pageCurrent.length;
+    if (this.page > 3 && this.page < last) {
+      this.pageCurrent = this.sizing.slice(pg - 3, pg + 2);
+      // console.log('​showPage -> 1');
+      this.sentSort(pg);
+    } else if (this.page > last) {
+      this.pageCurrent = this.sizing.slice(this.size - sizePage > 1 ? this.size - sizePage : 0, this.size);
+      // console.log('​showPage -> 2');
+      this.sentSort(pg);
+    } else if (this.page < sizePage) {
+      this.pageCurrent = this.sizing.slice(0, 5);
+      // console.log('​showPage -> 3');
+      this.sentSort(pg);
+    } else {
+      this.pageCurrent = this.sizing.slice(pg - 3 > 1 ? pg - 3 : 0, this.size > 5 && pg < 5 ? 5 : this.size);
+      // console.log('​showPage -> 4', this.pageCurrent, pg - 3, this.size > 5 ? 5 : this.size);
+      this.sentSort(pg);
+    }
+  }
+
+  sentSort(pg) {
+    this.SortBacks.page = pg;
+    this.SortBacks.rowSelect = this.row;
+    this.SortBacks.data = this.sortSource[pg - 1 > -1 ? pg - 1 : 0];
+    this.SortBack.emit(this.SortBacks);
+  }
+
+  onSelectrow() {
+    this.sourceManage([...this.dataSource])
+      .then((e: any[]) => {
+        this.sortSource = e;
+        this.size = Math.ceil(this.totalSize / this.row);
+        if (this.size) {
+          this.sizing = Array(this.size).fill(2).map((x, i) => i + 1);
+        }
+        this.goFirst();
+      });
+  }
 
 }

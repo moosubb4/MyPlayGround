@@ -1,9 +1,9 @@
-.kr{
-table-layout: auto;
-background-color: #fff7aa;
-border:3px;
-border-color: black;
-display: table;
+.kr {
+    table-layout: auto;
+    background-color: #fff7aa;
+    border: 3px;
+    border-color: black;
+    display: table;
 }
 
 /* input[type=number]::-webkit-inner-spin-button, 
@@ -18,35 +18,35 @@ input[type=number]::-webkit-outer-spin-button {
   margin: 0; 
 } */
 
-.kr--tr{    
+.kr--tr {
     display: flex;
-    flex-direction: row;       
+    flex-direction: row;
 }
 
-.kr--tr>div{
-    padding: 1px; 
+.kr--tr>div {
+    padding: 1px;
     width: 100%;
 }
 
-.kr--td{
+.kr--td {
     display: flex;
-    flex-direction: column;  
+    flex-direction: column;
 }
 
-.kr--td>div{
-    margin: 3px; 
-    width: 100px; 
+.kr--td>div {
+    margin: 3px;
+    width: 100px;
 }
 
-.kr--thead{
+.kr--thead {
     background-color: rgb(243, 167, 2);
 }
 
-.kr--tbody{
+.kr--tbody {
     background-color: rgb(224, 241, 66);
 }
 
-.kr--tfoot{
+.kr--tfoot {
     background-color: rgb(122, 226, 25);
     justify-content: center !important;
 }
@@ -56,9 +56,8 @@ input[type=number]::-webkit-outer-spin-button {
     text-overflow: ellipsis;
     white-space: nowrap;
     width: 100%;
-    display: inline-block;      
+    display: inline-block;
 }
-
 
 /* 
 .Table
@@ -92,19 +91,20 @@ input[type=number]::-webkit-outer-spin-button {
 } */
 
 /*------------------------------------------------*/
-.btn-foot{
+
+.btn-foot {
     width: 100%;
     float: right;
 }
 
 .btn-foot .btn {
-	background-color: #b2b2b2;
-	box-shadow: 0 2px 0 #797979;
+    background-color: #b2b2b2;
+    box-shadow: 0 2px 0 #797979;
     color: #fff;
     float: right;
     margin-left: 5px;
-    
 }
+
 .btn-foot .btn_pink {
     background-color: #f899b0;
     color: #fff;
@@ -117,10 +117,10 @@ input[type=number]::-webkit-outer-spin-button {
     box-shadow: 0 2px 0 #797979;
 }
 
- .btn-foot> p {
+.btn-foot>p {
     float: left;
     margin-top: 20px;
-} 
+}
 
 .close {
     font-size: 21px;
@@ -130,36 +130,38 @@ input[type=number]::-webkit-outer-spin-button {
 /*------------------------------------------------*/
 
 /* Tooltip container */
+
 .tooltips {
     position: relative;
-    display: inline-block;  
+    display: inline-block;
     text-overflow: ellipsis;
     white-space: nowrap;
     width: 180px;
 }
 
 /* Tooltip text */
+
 .tooltips .tooltiptext {
     visibility: hidden;
-    background-color: #fff7aa;/* #555;*/
+    background-color: #fff7aa;
+    /* #555;*/
     color: rgb(10, 3, 3);
     text-align: center;
     padding: 4px 0;
     padding-left: 4px;
     padding-right: 4px;
-
     /* Position the tooltip text */
     position: absolute;
     z-index: 1;
     bottom: 15%;
     left: -5%;
-
     /* Fade in tooltip */
     opacity: 0;
     transition: opacity 1s;
 }
 
 /* Tooltip arrow */
+
 .tooltips .tooltiptext::after {
     content: "";
     position: absolute;
@@ -172,6 +174,7 @@ input[type=number]::-webkit-outer-spin-button {
 }
 
 /* Show the tooltip text when you mouse over the tooltip container */
+
 .tooltips:hover .tooltiptext {
     visibility: visible;
     opacity: 1;
@@ -182,8 +185,9 @@ input[type=number]::-webkit-outer-spin-button {
     text-overflow: ellipsis;
     white-space: nowrap;
     width: 100%;
-    display: inline-block;      
+    display: inline-block;
 }
+
 /*------------------------------------------------*/
 
 .disabled {
@@ -192,3 +196,32 @@ input[type=number]::-webkit-outer-spin-button {
     pointer-events: none;
 }
 
+.flex-container {
+    display: inline-flex;
+    flex-direction: column;
+    /* display: flex; */
+    flex-wrap: wrap;
+    background-color: DodgerBlue;
+}
+
+.flex-container>div {
+    display: inline-flex;
+    flex-direction: row;
+    background-color: #f1f1f1;
+    width: 100px;
+    margin: 5px;
+    text-align: center;
+    line-height: 20px;
+    font-size: 16px;
+}
+
+.flex-container>div>div {
+    display: inline-flex;
+    flex-direction: row;
+    width: 100px;
+    margin: 0px 5px;
+    margin: 0px 5px;
+    text-align: center;
+    line-height: 20px;
+    font-size: 16px;
+}
