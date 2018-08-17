@@ -25,10 +25,13 @@ export class InputBoxDirective implements OnInit {
     onlyNumber?: boolean
   };
 
-  @Output() onCheckBytes = new EventEmitter<ByteStr>();
-
   @Input() AllowNegative: boolean;
   @Input() defaultZero: boolean;
+
+  @Output() onCheckBytes = new EventEmitter<ByteStr>();
+  @Output() onNegative = new EventEmitter<number>();
+
+
 
   public jpFull = new RegExp(/[\u3000-\u303F]|[\u3040-\u309F]|[\u30A0-\u30FF]|[\u4E00-\u9FAF]/, 'g'); // Jap Charactor Full-Width
   public jpHalf = new RegExp(/[\uFF00-\uFFEF]/, 'g'); // Jap Charactor Half-Width
@@ -72,18 +75,8 @@ export class InputBoxDirective implements OnInit {
     }// checkByte
 
     if (this.optionBox.onlyNumber) {
-      if (event.target.value.match(this.allowNumber)) {
-        const num = event.target.value.replace(this.notNumber, '');
-        elm.value = num.match(/^-?[0-9]\d*(\.\d+)?$/, 'g') ? num : '-'.concat(num.split('-').join(''));
-
-        console.log('​InputBoxDirective -> onFocusout -> ', num.split('-').join(''));
-      } else {
-        if (this.defaultZero) {
-          this.el.nativeElement.value = 0;
-        } else {
-          this.el.nativeElement.value = '';
-        }
-      }
+      const value = this.onNegativeValue(event, elm);
+      this.onNegative.emit(value);
     }// onlyNumber
 
   }
@@ -95,7 +88,7 @@ export class InputBoxDirective implements OnInit {
     const matchDash = event.target.value.match(/[-]/, 'g');
 
     if (this.optionBox.onlyNumber) {
-      this.onOnlyNUmber(e, matchDash);
+      this.onOnlyNumber(e, matchDash);
     }// onlyNumber
 
   }
@@ -106,11 +99,6 @@ export class InputBoxDirective implements OnInit {
     const elm = this.el.nativeElement;
     const matchDash = event.target.value.match(/[-]/, 'g');
 
-    if (this.optionBox.onlyNumber) {
-      // if (event.target.value.match(this.allowNumber)) {
-      //   elm.value = event.target.value.replace(this.notNumber, '');
-      // }
-    }// onlyNumber
   }
 
   onCheckByte(str: string, maxLength: number): ByteStr {
@@ -138,9 +126,9 @@ export class InputBoxDirective implements OnInit {
       });
     return { totalByte: count, subByte: subByte };
 
-  }
+  }// for Check byte
 
-  onOnlyNUmber(e, matchDash) {
+  onOnlyNumber(e, matchDash) {
     if (
       [46, 8, 9, 27, 13, 92, 110, 190].indexOf(e.keyCode) !== -1 ||
       // Allow: Ctrl+A
@@ -186,7 +174,19 @@ export class InputBoxDirective implements OnInit {
         e.preventDefault();
       }
     }
-  }
+  }// for onLynumbber
+
+  onNegativeValue(event, elm) {
+    if (event.target.value.match(this.allowNumber)) {
+      const num = event.target.value.replace(this.notNumber, '');
+      elm.value = !num.match(/^-?[1-9]\d*(\.\d+)?$/, 'g') && +num !== 0
+        ? '-'.concat((+num.split('-').join('')).toString())
+        : +num > 0 ? num : this.defaultZero ? 0 : '';
+    } else {
+      this.el.nativeElement.value = this.defaultZero ? 0 : '';
+    }
+    return elm.value;
+  }// for nagative value
 
   browserDetect(): { browser: string } {
     const userAgent = window.navigator.userAgent;
