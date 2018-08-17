@@ -2,6 +2,11 @@ input[type="text"]:focus {
     background-color: #76FF03
 }
 
+span {
+    display: inline-block;
+    margin: 5px;
+}
+
 .elm-focus {
     box-shadow: #76FF03;
 }

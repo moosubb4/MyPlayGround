@@ -38,6 +38,7 @@ import { KeyenterComponent } from './components/keyenter/keyenter.component';
 import { KeyenterDirective } from './directives/keyenter.directive';
 import { DatePickersComponent } from './components/calendar/date-pickers/date-pickers.component';
 import { EnterkeysDirective } from './directives/enterkeys.directive';
+import { InputBoxDirective } from './directives/input-box.directive';
 // import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 // import { MatButtonModule, MatCheckboxModule } from '@angular/material';
 
@@ -86,7 +87,8 @@ const appRoutes: Routes = [
     // CalendarDateComponent,
     // DropdowncalendarComponent,
     DatePickersComponent,
-    EnterkeysDirective
+    EnterkeysDirective,
+    InputBoxDirective
   ],
   imports: [
     BrowserModule,

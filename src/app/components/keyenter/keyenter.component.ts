@@ -30,12 +30,18 @@ export class KeyenterComponent implements OnInit {
   public textNormal = new RegExp(/[a-z]|[A-Z]|[ก-ฮ]/, 'g');
   public wordstr: number;
 
+  public testSpell = 'ああアｳｳab';
+
+  public inputB: {};
 
   constructor() {
     this.wordstr = 25;
   }
 
   ngOnInit() {
+    this.inputB = {
+      checkByte: true
+    };
 
     // const sjisArray = [
     //   130, 177, 130, 241, 130, 201, 130, 191, 130, 205
@@ -48,6 +54,13 @@ export class KeyenterComponent implements OnInit {
 
   }
 
+  returnDirective(event) {
+    console.log('​returnDirective ->', event);
+  }
+
+  getValForm(event) {
+    console.log('​getValForm ->', '\ntestSpell', this.testSpell);
+  }
 
 
   lengthInUtf8Bytes = (str: string) => {
