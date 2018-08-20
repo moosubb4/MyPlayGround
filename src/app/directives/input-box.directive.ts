@@ -6,12 +6,24 @@ import {
   ElementRef,
   HostListener,
   EventEmitter,
-  Renderer
+  Renderer,
+  Renderer2
 } from '@angular/core';
 
 interface ByteStr {
   totalByte?: number;
   subByte?: string;
+}
+
+interface InputBox {
+  checkByte?: boolean;
+  onlyNumber?: boolean;
+  allowNegative?: boolean;
+  defaultZero?: boolean;
+  onIME?: string;
+  onFocus?: boolean;
+  padNumber?: number;
+  keyenter?: string;
 }
 
 @Directive({
@@ -20,19 +32,12 @@ interface ByteStr {
 
 export class InputBoxDirective implements OnInit {
 
-  @Input() optionBox: {
-    checkByte?: boolean,
-    onlyNumber?: boolean,
-    allowNegative?: boolean,
-    defaultZero?: boolean,
-    onIME?: string,
-    onFocus?: boolean,
-    padNumber?: number
-  };
+  @Input() optionBox: InputBox;
 
   @Output() CheckBytes = new EventEmitter<ByteStr>();
   @Output() Negative = new EventEmitter<number>();
   @Output() fillNumber = new EventEmitter<string>();
+  @Output() NextInput = new EventEmitter<{}>();
 
 
 
@@ -43,7 +48,6 @@ export class InputBoxDirective implements OnInit {
   public notNumber = new RegExp(/[^0-9\-]/, 'g'); // number only
   public nonespace = new RegExp(/\s/, 'g'); // none white space
   // (/^-?[0-9]\d*(\.\d+)?$/) (/^\-?[1-9]\d{0,2}(\.\d*)?$/)
-
   public browsers: string[] = [
     'chrome',
     'safari',
@@ -56,44 +60,63 @@ export class InputBoxDirective implements OnInit {
 
   constructor(
     private el: ElementRef,
-    private renderer: Renderer) {
+    private renderer: Renderer,
+    private renderer2: Renderer2
+  ) {
     this.optionBox = {
       checkByte: false,
       onlyNumber: false,
       allowNegative: false,
       defaultZero: false,
-      onFocus: false
-    };
+      onFocus: false,
+      keyenter: 'groupEnter'
+    }; // default value
   }
 
   ngOnInit() {
     if (this.optionBox.onIME) {
       this.el.nativeElement.style.imeMode = this.optionBox.onIME;
     } // IME mode default auto
+
+    if (this.optionBox.keyenter) {
+      const group = this.optionBox.keyenter;
+      // Set @Input Group ID
+      // this.el.nativeElement.setAttribute('class', group);
+      this.renderer2.addClass(this.el.nativeElement, group);
+      // Set Class for count input Element
+      const getDoc = document.querySelectorAll(`*[class=${group}]`);
+      // Get All Class by Group name
+      // this.el.nativeElement.setAttribute('id', `${group}${getDoc.length}`);
+      this.renderer2.setAttribute(this.el.nativeElement, 'id', `${group}${getDoc.length}`);
+      // Set Attribute ID to  input Elemen
+    }// keyenter
   }
 
   @HostListener('focus', ['$event'])
   onfocus(event) {
     const e = <KeyboardEvent>event;
     const elm = this.el.nativeElement;
-    const matchDash = event.target.value.match(/[-]/, 'g');
+    const matchDash = (event.target.value ? event.target.value : '').match(/[-]/, 'g');
 
     if (this.optionBox.onIME) {
       if (this.optionBox.onIME === 'disabled') {
-        this.el.nativeElement.type = 'tel';
+        elm.type = 'tel';
       } else if (this.optionBox.onIME === 'auto') {
-        this.el.nativeElement.type = 'text';
+        elm.type = 'text';
       }
-      // console.log('​optionBox.onIME', this.el.nativeElement.type, this.optionBox.onIME);
     }// IME mode
 
 
     if (this.optionBox.onFocus) {
-      this.renderer.setElementStyle(
+      // this.renderer.setElementStyle(
+      //   this.el.nativeElement,
+      //   'backgroundColor',
+      //   '#76FF03'
+      // );
+      this.renderer2.setStyle(
         this.el.nativeElement,
         'backgroundColor',
-        '#76FF03'
-      );
+        '#76FF03');
       if (this.el.nativeElement.value) {
         this.el.nativeElement.select();
       }
@@ -106,7 +129,7 @@ export class InputBoxDirective implements OnInit {
   onFocusout(event) {
     const e = <KeyboardEvent>event;
     const elm = this.el.nativeElement;
-    const matchDash = event.target.value.match(/[-]/, 'g');
+    const matchDash = (event.target.value ? event.target.value : '').match(/[-]/, 'g');
 
     if (this.optionBox.checkByte) {
       const result: ByteStr = this.onCheckByte(elm.value, elm.maxLength);
@@ -119,18 +142,21 @@ export class InputBoxDirective implements OnInit {
     }// onlyNumber
 
     if (this.optionBox.onIME) {
-      if (this.el.nativeElement.type === 'tel') {
-        this.el.nativeElement.type = 'text';
+      if (elm.type === 'tel') {
+        elm.type = 'text';
       }
-      // console.log('​optionBox.onIME', this.el.nativeElement.type, this.optionBox.onIME);
     }// IME mode
 
     if (this.optionBox.onFocus) {
-      this.renderer.setElementStyle(
+      // this.renderer.setElementStyle(
+      //   this.el.nativeElement,
+      //   'backgroundColor',
+      //   ''
+      // );
+      this.renderer2.setStyle(
         this.el.nativeElement,
         'backgroundColor',
-        ''
-      );
+        '');
     }// on focus
 
     if (this.optionBox.padNumber) {
@@ -145,7 +171,7 @@ export class InputBoxDirective implements OnInit {
   onkeydown(event) {
     const e = <KeyboardEvent>event;
     const elm = this.el.nativeElement;
-    const matchDash = event.target.value.match(/[-]/, 'g');
+    const matchDash = (event.target.value ? event.target.value : '').match(/[-]/, 'g');
 
     if (this.optionBox.onlyNumber) {
       this.onOnlyNumber(e, matchDash);
@@ -153,11 +179,47 @@ export class InputBoxDirective implements OnInit {
 
   }
 
+  @HostListener('keydown.enter', ['$event'])
+  onKeyDown(e) {
+    if (this.optionBox.keyenter && (e.which === 13 || e.keyCode === 13)) {
+      // Enter Key checking
+      const group = this.optionBox.keyenter;
+      const getAllElm = Array
+        .from(document.querySelectorAll(`*[id]`))
+        .filter(elm => elm.id.includes(group))
+        .map(eid => eid.id);
+      // Create Array
+      // From All Id in document
+      // Filter Element by Group name
+      // Map only Id of input Element
+
+      const elmAll = getAllElm.indexOf(this.el.nativeElement.id);
+      // get Current ID
+      const next = getAllElm[elmAll + 1];
+      // set Next ID
+
+      if (elmAll < getAllElm.length - 1) {
+        // if Current ID Less than Element Array
+        (<HTMLInputElement>document.querySelector(`#${next}`)).focus();
+        // focus Next ID
+      } else {
+        this.el.nativeElement.blur();
+        // focus out of current ID
+      }
+
+      this.NextInput.emit({
+        allElm: getAllElm,
+        nextElm: next,
+        curElm: this.el.nativeElement.id
+      });
+    }
+  }
+
   @HostListener('keyup', ['$event'])
   onkeyup(event) {
     const e = <KeyboardEvent>event;
     const elm = this.el.nativeElement;
-    const matchDash = event.target.value.match(/[-]/, 'g');
+    const matchDash = (event.target.value ? event.target.value : '').match(/[-]/, 'g');
 
   }
 

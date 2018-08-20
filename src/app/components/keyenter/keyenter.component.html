@@ -149,6 +149,9 @@
     </div>
   </div>
   <div class="col-md-3">
+    <!--
+    TEstttttt
+  -->
     <h3>Test InpuBox Diredtive</h3>
     <div class="lds-ripple">
       <span>
@@ -159,7 +162,10 @@
                [(ngModel)]="formB.testSpell"
                appInputBox
                (CheckBytes)="returnDirective($event)"
-               [optionBox]="{checkByte: true}">
+               [optionBox]="{
+                 checkByte: true,
+                 keyenter:'input2'
+                }">
       </span>
       <br>
       <span>
@@ -167,11 +173,13 @@
         <input type="text"
                id="humnoi"
                [(ngModel)]="formB.numberIn"
+               (Negative)="outPut($event)"
                appInputBox
                [optionBox]="{
                  onlyNumber: true,
                  defaultZero: true,
-                 allowNegative: true
+                 allowNegative: true,
+                 keyenter:'input2'
                 }">
       </span>
       <br>
@@ -182,7 +190,8 @@
                [(ngModel)]="formB.onIme"
                appInputBox
                [optionBox]="{
-                onIME:'disabled'
+                onIME:'disabled',
+                keyenter:'input3'
                }">
       </span>
       <br>
@@ -194,17 +203,24 @@
                [(ngModel)]="formB.padNum"
                (fillNumber)="formB.padNum = $event"
                [optionBox]="{
-                padNumber:10
+                padNumber:10,
+                keyenter:'input3'
                }">
       </span>
       <br>
       <button class="elm-focus"
               (click)="getValForm($event)"
-              appInputBox>FOCUS ME!2</button>
+              appInputBox
+              [optionBox]="{
+                keyenter:'input3'
+               }">FOCUS ME!2</button>
       <br>
       <a href="javascript:void(0)"
          class="elm-focus"
-         appEnterkeys>FOCUS A2</a>
+         appInputBox
+         [optionBox]="{
+                keyenter:'input3'
+               }">FOCUS A2</a>
       <br>
     </div>
 

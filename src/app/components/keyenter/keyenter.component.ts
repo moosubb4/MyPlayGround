@@ -76,6 +76,10 @@ export class KeyenterComponent implements OnInit {
     console.log('​getValForm ->', this.formB);
   }
 
+  outPut(event) {
+    console.log('​outPut -> ', event);
+  }
+
 
   lengthInUtf8Bytes = (str: string) => {
     const m = encodeURIComponent(str).match(/%[一-龯][一-龯]/g);
