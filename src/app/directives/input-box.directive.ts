@@ -22,11 +22,11 @@ export class InputBoxDirective implements OnInit {
 
   @Input() optionBox: {
     checkByte?: boolean,
-    onlyNumber?: boolean
+    onlyNumber?: boolean,
+    allowNegative?: boolean,
+    defaultZero?: boolean,
+    onIME?: string
   };
-
-  @Input() AllowNegative: boolean;
-  @Input() defaultZero: boolean;
 
   @Output() onCheckBytes = new EventEmitter<ByteStr>();
   @Output() onNegative = new EventEmitter<number>();
@@ -54,13 +54,32 @@ export class InputBoxDirective implements OnInit {
   constructor(private el: ElementRef) {
     this.optionBox = {
       checkByte: false,
-      onlyNumber: false
+      onlyNumber: false,
+      allowNegative: false,
+      defaultZero: false
     };
-    this.AllowNegative = true;
-    this.defaultZero = false;
   }
 
   ngOnInit() {
+    if (this.optionBox.onIME) {
+      this.el.nativeElement.style.imeMode = this.optionBox.onIME;
+    } // IME mode default auto
+  }
+
+  @HostListener('focus', ['$event'])
+  onfocus(event) {
+    const e = <KeyboardEvent>event;
+    const elm = this.el.nativeElement;
+    const matchDash = event.target.value.match(/[-]/, 'g');
+
+    if (this.optionBox.onIME) {
+      if (this.optionBox.onIME === 'disabled') {
+        this.el.nativeElement.type = 'tel';
+      } else if (this.optionBox.onIME === 'auto') {
+        this.el.nativeElement.type = 'text';
+      }
+      // console.log('​optionBox.onIME', this.el.nativeElement.type, this.optionBox.onIME);
+    }// IME mode
   }
 
   @HostListener('focusout', ['$event'])
@@ -78,6 +97,13 @@ export class InputBoxDirective implements OnInit {
       const value = this.onNegativeValue(event, elm);
       this.onNegative.emit(value);
     }// onlyNumber
+
+    if (this.optionBox.onIME) {
+      if (this.el.nativeElement.type === 'tel') {
+        this.el.nativeElement.type = 'text';
+      }
+      // console.log('​optionBox.onIME', this.el.nativeElement.type, this.optionBox.onIME);
+    }// IME mode
 
   }
 
@@ -149,7 +175,7 @@ export class InputBoxDirective implements OnInit {
       (e.shiftKey || (e.keyCode < 48 || e.keyCode > 57)) &&
       (e.keyCode < 96 || (e.keyCode > 105 && e.keyCode))
     ) {
-      if (this.AllowNegative) {
+      if (this.optionBox.allowNegative) {
         if (this.browserDetect().browser !== this.browsers[2]) {
           // isFirefox
           if (e.keyCode === 109 || e.keyCode === 189) {
@@ -179,11 +205,15 @@ export class InputBoxDirective implements OnInit {
   onNegativeValue(event, elm) {
     if (event.target.value.match(this.allowNumber)) {
       const num = event.target.value.replace(this.notNumber, '');
-      elm.value = !num.match(/^-?[1-9]\d*(\.\d+)?$/, 'g') && +num !== 0
-        ? '-'.concat((+num.split('-').join('')).toString())
-        : +num > 0 ? num : this.defaultZero ? 0 : '';
+      const numConv = num.match(/[-]/, 'g')
+        ? this.calcualate(num)
+        : +num;
+      elm.value = numConv !== 0
+        ? numConv : this.optionBox.defaultZero
+          ? 0 : '';
+
     } else {
-      this.el.nativeElement.value = this.defaultZero ? 0 : '';
+      this.el.nativeElement.value = this.optionBox.defaultZero ? 0 : '';
     }
     return elm.value;
   }// for nagative value
@@ -197,6 +227,14 @@ export class InputBoxDirective implements OnInit {
     );
 
     return { browser: Detecting[0].toString() };
+  }
+
+  calcualate(num: string): number {
+    if (num) {
+      const dashIndex = num.split('').findIndex(e => e === '-');
+      return +num.substr(0, dashIndex) + +num.substr(dashIndex, num.length);
+      // console.log('​calcualate -> aaa', numCal);
+    }
   }
 
 }

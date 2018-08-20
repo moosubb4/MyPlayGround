@@ -167,14 +167,21 @@
         <input type="text"
                id="humnoi"
                appInputBox
-               [optionBox]="{onlyNumber: true}">
+               [optionBox]="{
+                 onlyNumber: true,
+                 defaultZero: true,
+                 allowNegative: true
+                }">
       </span>
       <br>
       <span>
-        <label></label>
+        <label>IME mode:</label>
         <input type="text"
                id="nakamura"
-               appInputBox>
+               appInputBox
+               [optionBox]="{
+                onIME:'disabled'
+               }">
       </span>
       <br>
       <span>

@@ -5,6 +5,7 @@ input[type="text"]:focus {
 span {
     display: inline-block;
     margin: 5px;
+    /* ime-mode: disabled */
 }
 
 .elm-focus {
