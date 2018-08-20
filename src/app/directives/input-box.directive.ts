@@ -187,7 +187,10 @@ export class InputBoxDirective implements OnInit {
 
       if (elmAll < getAllElm.length - 1) {
         // if Current ID Less than Element Array
-        (<HTMLInputElement>document.querySelector(`#${next}`)).focus();
+        // (<HTMLInputElement>document.querySelector(`#${next}`)).focus();
+        const rootElm = (this.renderer2.selectRootElement(`#${next}`));
+        console.log('​rootElm', rootElm);
+        rootElm.focus();
 
         // focus Next ID
       } else {
