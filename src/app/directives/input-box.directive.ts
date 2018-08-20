@@ -81,12 +81,10 @@ export class InputBoxDirective implements OnInit {
     if (this.optionBox.keyenter) {
       const group = this.optionBox.keyenter;
       // Set @Input Group ID
-      // this.el.nativeElement.setAttribute('class', group);
-      this.renderer2.addClass(this.el.nativeElement, group);
+      this.renderer2.setAttribute(this.el.nativeElement, 'class', group);
       // Set Class for count input Element
       const getDoc = document.querySelectorAll(`*[class=${group}]`);
       // Get All Class by Group name
-      // this.el.nativeElement.setAttribute('id', `${group}${getDoc.length}`);
       this.renderer2.setAttribute(this.el.nativeElement, 'id', `${group}${getDoc.length}`);
       // Set Attribute ID to  input Elemen
     }// keyenter
@@ -108,11 +106,6 @@ export class InputBoxDirective implements OnInit {
 
 
     if (this.optionBox.onFocus) {
-      // this.renderer.setElementStyle(
-      //   this.el.nativeElement,
-      //   'backgroundColor',
-      //   '#76FF03'
-      // );
       this.renderer2.setStyle(
         this.el.nativeElement,
         'backgroundColor',
@@ -148,11 +141,6 @@ export class InputBoxDirective implements OnInit {
     }// IME mode
 
     if (this.optionBox.onFocus) {
-      // this.renderer.setElementStyle(
-      //   this.el.nativeElement,
-      //   'backgroundColor',
-      //   ''
-      // );
       this.renderer2.setStyle(
         this.el.nativeElement,
         'backgroundColor',
@@ -192,7 +180,6 @@ export class InputBoxDirective implements OnInit {
       // From All Id in document
       // Filter Element by Group name
       // Map only Id of input Element
-
       const elmAll = getAllElm.indexOf(this.el.nativeElement.id);
       // get Current ID
       const next = getAllElm[elmAll + 1];
@@ -201,6 +188,7 @@ export class InputBoxDirective implements OnInit {
       if (elmAll < getAllElm.length - 1) {
         // if Current ID Less than Element Array
         (<HTMLInputElement>document.querySelector(`#${next}`)).focus();
+
         // focus Next ID
       } else {
         this.el.nativeElement.blur();
@@ -213,6 +201,7 @@ export class InputBoxDirective implements OnInit {
         curElm: this.el.nativeElement.id
       });
     }
+
   }
 
   @HostListener('keyup', ['$event'])
