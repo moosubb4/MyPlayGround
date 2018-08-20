@@ -25,11 +25,12 @@ export class InputBoxDirective implements OnInit {
     onlyNumber?: boolean,
     allowNegative?: boolean,
     defaultZero?: boolean,
-    onIME?: string
+    onIME?: string,
+    onFocus?: boolean
   };
 
-  @Output() onCheckBytes = new EventEmitter<ByteStr>();
-  @Output() onNegative = new EventEmitter<number>();
+  @Output() CheckBytes = new EventEmitter<ByteStr>();
+  @Output() Negative = new EventEmitter<number>();
 
 
 
@@ -51,12 +52,15 @@ export class InputBoxDirective implements OnInit {
   ];
 
 
-  constructor(private el: ElementRef) {
+  constructor(
+    private el: ElementRef,
+    private renderer: Renderer) {
     this.optionBox = {
       checkByte: false,
       onlyNumber: false,
       allowNegative: false,
-      defaultZero: false
+      defaultZero: false,
+      onFocus: false
     };
   }
 
@@ -80,6 +84,20 @@ export class InputBoxDirective implements OnInit {
       }
       // console.log('​optionBox.onIME', this.el.nativeElement.type, this.optionBox.onIME);
     }// IME mode
+
+
+    if (this.optionBox.onFocus) {
+      this.renderer.setElementStyle(
+        this.el.nativeElement,
+        'backgroundColor',
+        '#76FF03'
+      );
+      if (this.el.nativeElement.value) {
+        this.el.nativeElement.select();
+      }
+    }// on focus
+
+
   }
 
   @HostListener('focusout', ['$event'])
@@ -90,12 +108,12 @@ export class InputBoxDirective implements OnInit {
 
     if (this.optionBox.checkByte) {
       const result: ByteStr = this.onCheckByte(elm.value, elm.maxLength);
-      this.onCheckBytes.emit({ ...result });
+      this.CheckBytes.emit({ ...result });
     }// checkByte
 
     if (this.optionBox.onlyNumber) {
       const value = this.onNegativeValue(event, elm);
-      this.onNegative.emit(value);
+      this.Negative.emit(value);
     }// onlyNumber
 
     if (this.optionBox.onIME) {
@@ -104,6 +122,14 @@ export class InputBoxDirective implements OnInit {
       }
       // console.log('​optionBox.onIME', this.el.nativeElement.type, this.optionBox.onIME);
     }// IME mode
+
+    if (this.optionBox.onFocus) {
+      this.renderer.setElementStyle(
+        this.el.nativeElement,
+        'backgroundColor',
+        ''
+      );
+    }// on focus
 
   }
 
