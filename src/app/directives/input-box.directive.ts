@@ -26,11 +26,13 @@ export class InputBoxDirective implements OnInit {
     allowNegative?: boolean,
     defaultZero?: boolean,
     onIME?: string,
-    onFocus?: boolean
+    onFocus?: boolean,
+    padNumber?: number
   };
 
   @Output() CheckBytes = new EventEmitter<ByteStr>();
   @Output() Negative = new EventEmitter<number>();
+  @Output() fillNumber = new EventEmitter<string>();
 
 
 
@@ -130,6 +132,12 @@ export class InputBoxDirective implements OnInit {
         ''
       );
     }// on focus
+
+    if (this.optionBox.padNumber) {
+      const pad = this.padNumber(this.el.nativeElement.value, this.optionBox.padNumber);
+      this.el.nativeElement.value = pad;
+      this.fillNumber.emit(pad);
+    }
 
   }
 
@@ -261,6 +269,14 @@ export class InputBoxDirective implements OnInit {
       return +num.substr(0, dashIndex) + +num.substr(dashIndex, num.length);
       // console.log('​calcualate -> aaa', numCal);
     }
+  }
+
+  padNumber(input: string, n: number): string {
+    let s = input;
+    while (s.length < n) {
+      s = '0' + s;
+    }
+    return s;
   }
 
 }

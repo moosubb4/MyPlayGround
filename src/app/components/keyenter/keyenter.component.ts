@@ -34,8 +34,21 @@ export class KeyenterComponent implements OnInit {
 
   public inputB: {};
 
+  public formB: {
+    testSpell: any,
+    numberIn: any,
+    onIme: any,
+    padNum: any,
+  };
+
   constructor() {
     this.wordstr = 25;
+    this.formB = {
+      testSpell: 'ああアｳｳab',
+      numberIn: 0,
+      onIme: 'olo',
+      padNum: 555
+    };
   }
 
   ngOnInit() {
@@ -55,11 +68,12 @@ export class KeyenterComponent implements OnInit {
   }
 
   returnDirective(event) {
-    console.log('​returnDirective ->', event);
+    this.formB.testSpell = event.subByte;
+    // console.log('​returnDirective ->', event);
   }
 
   getValForm(event) {
-    console.log('​getValForm ->', '\ntestSpell', this.testSpell);
+    console.log('​getValForm ->', this.formB);
   }
 
 

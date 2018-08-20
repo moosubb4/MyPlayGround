@@ -156,7 +156,7 @@
         <input type="text"
                id="humtung"
                maxlength="10"
-               [(ngModel)]="testSpell"
+               [(ngModel)]="formB.testSpell"
                appInputBox
                (CheckBytes)="returnDirective($event)"
                [optionBox]="{checkByte: true}">
@@ -166,6 +166,7 @@
         <label>onlyNumber:</label>
         <input type="text"
                id="humnoi"
+               [(ngModel)]="formB.numberIn"
                appInputBox
                [optionBox]="{
                  onlyNumber: true,
@@ -178,6 +179,7 @@
         <label>IME mode:</label>
         <input type="text"
                id="nakamura"
+               [(ngModel)]="formB.onIme"
                appInputBox
                [optionBox]="{
                 onIME:'disabled'
@@ -185,10 +187,15 @@
       </span>
       <br>
       <span>
-        <label></label>
+        <label>PadNuber Zero:</label>
         <input type="text"
                id="kokoro"
-               appInputBox>
+               appInputBox
+               [(ngModel)]="formB.padNum"
+               (fillNumber)="formB.padNum = $event"
+               [optionBox]="{
+                padNumber:10
+               }">
       </span>
       <br>
       <button class="elm-focus"
